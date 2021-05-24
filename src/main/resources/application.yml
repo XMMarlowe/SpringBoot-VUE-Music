@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+spring:
+  profiles:
+    active: dev
+  datasource:
+    druid:
+      url: jdbc:mysql://116.63.164.16:3307/visitcqut?useUnicode=t
+        rue&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyD
+        atetimeCode=false&serverTimezone=UTC
+      username: root
+      password: root
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+      test-on-borrow: true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  type-aliases-package: com.visitcqut.domain
+  mapper-locations: mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+
+
+
+
