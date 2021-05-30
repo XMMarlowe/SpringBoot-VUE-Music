@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import java.util.Date;
+
+import lombok.*;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -13,9 +15,13 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author marlowe
- * @since 2021-05-29
+ * @since 2021-05-30
  */
 @Data
+@Accessors(chain = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = false)
 public class Singer implements Serializable {
 
@@ -45,7 +51,7 @@ public class Singer implements Serializable {
     /**
      * 生日
      */
-    private LocalDateTime birth;
+    private Date birth;
 
     /**
      * 地区

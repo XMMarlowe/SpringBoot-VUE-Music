@@ -2,6 +2,8 @@ package com.marlowe.music.commons.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -12,7 +14,9 @@ import java.io.Serializable;
  * @create: 2021-05-29 22:27
  **/
 @Data
+@ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class Result<T> implements Serializable, IResult<T> {
 
     /**

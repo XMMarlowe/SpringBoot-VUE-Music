@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author marlowe
- * @since 2021-05-29
+ * @since 2021-05-30
  */
 @RestController
 @RequestMapping("/comment")

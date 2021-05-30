@@ -63,6 +63,10 @@ public class CodeGenerator {
         PackageConfig pc = new PackageConfig();
 //        pc.setModuleName(scanner("模块名"));
         pc.setParent("com.marlowe.music");
+        pc.setController("controller");
+        pc.setEntity("entity");
+        pc.setService("service");
+        pc.setMapper("mapper");
         mpg.setPackageInfo(pc);
         // 自定义配置
         InjectionConfig cfg = new InjectionConfig() {
@@ -71,8 +75,8 @@ public class CodeGenerator {
                 // to do nothing
             }
         };
-        // 如果模板引擎是 freemarker
-        //String templatePath = "/templates/mapper.xml.ftl";
+         //如果模板引擎是 freemarker
+        String templatePath = "/templates/mapper.xml.ftl";
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
         // 自定义配置会被优先输出

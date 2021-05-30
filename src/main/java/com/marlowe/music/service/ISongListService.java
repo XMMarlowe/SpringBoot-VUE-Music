@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author marlowe
- * @since 2021-05-29
+ * @since 2021-05-30
  */
 public interface ISongListService extends IService<SongList> {
 
