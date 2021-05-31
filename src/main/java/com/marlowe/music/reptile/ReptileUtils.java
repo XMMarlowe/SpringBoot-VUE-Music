@@ -42,6 +42,7 @@ public class ReptileUtils {
      * @return
      */
     public boolean getAllSongs(int pageId) {
+        int cnt = 0;
 
         Map<Integer, String> map = new HashMap<>();
         map.put(1001, "华语男歌手");
@@ -168,8 +169,9 @@ public class ReptileUtils {
                             .setLocation(location)
                             .setIntroduction(introduction);
 
-                    int insert = singerMapper.insert(singer);
-                    System.out.println(insert);
+                    // 将歌手信息插入数据库
+//                    int insert = singerMapper.insert(singer);
+//                    System.out.println(insert);
 
                     // 获取当前歌手下所有热门歌曲
                     for (Element el : songElements) {
@@ -184,8 +186,10 @@ public class ReptileUtils {
                                 .setSingerId(singerId)
                                 .setName(title)
                                 .setIsDownload(0);
-                        int insert1 = songMapper.insert(song);
-                        System.out.println(insert1);
+                        // 将歌曲信息插入数据库
+//                        int insert1 = songMapper.insert(song);
+//                        System.out.println(insert1);
+                        cnt++;
 
                     }
                     System.out.println("当前歌手歌曲数量共：" + songElements.size());
@@ -199,6 +203,7 @@ public class ReptileUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("共爬取：" + cnt);
         System.out.println("========================爬取音乐结束========================");
         return true;
     }
