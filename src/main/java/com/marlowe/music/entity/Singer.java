@@ -34,9 +34,16 @@ public class Singer implements Serializable {
     private Integer id;
 
     /**
+     * 歌手id
+     */
+    private String singerId;
+
+
+    /**
      * 姓名
      */
     private String name;
+
 
     /**
      * 性别
@@ -63,5 +70,17 @@ public class Singer implements Serializable {
      */
     private String introduction;
 
+    public Singer(String singerId, String name) {
+        this.singerId = singerId;
+        this.name = name;
+    }
 
+    public Singer(String singerId, String name, int sex, String pic, String location, String introduction) {
+        this.singerId = singerId;
+        this.name = name;
+        this.sex = sex;
+        this.pic = pic;
+        this.location = location;
+        this.introduction = introduction;
+    }
 }

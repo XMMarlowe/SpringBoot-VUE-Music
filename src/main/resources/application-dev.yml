@@ -20,6 +20,7 @@ mybatis:
   mapper-locations: mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+    call-setters-on-nulls: true
 
 logging:
   level:

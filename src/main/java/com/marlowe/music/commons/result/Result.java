@@ -14,7 +14,6 @@ import java.io.Serializable;
  * @create: 2021-05-29 22:27
  **/
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Result<T> implements Serializable, IResult<T> {
@@ -71,7 +70,7 @@ public class Result<T> implements Serializable, IResult<T> {
      */
     @Override
     public String getMsg() {
-        return null;
+        return this.msg;
     }
 
     /**
@@ -81,7 +80,7 @@ public class Result<T> implements Serializable, IResult<T> {
      */
     @Override
     public String getCode() {
-        return null;
+        return this.code;
     }
 
     /**
@@ -91,6 +90,15 @@ public class Result<T> implements Serializable, IResult<T> {
      */
     @Override
     public T getData() {
-        return null;
+        return this.data;
+    }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "code='" + code + '\'' +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

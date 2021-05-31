@@ -2,10 +2,13 @@ package com.marlowe.music.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -16,6 +19,7 @@ import lombok.EqualsAndHashCode;
  * @since 2021-05-30
  */
 @Data
+@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 public class Song implements Serializable {
 
@@ -28,29 +32,14 @@ public class Song implements Serializable {
     private Integer id;
 
     /**
+     * 歌曲id
+     */
+    private String songId;
+
+    /**
      * 歌手id
      */
-    private Integer singerId;
-
-    /**
-     * 歌曲名
-     */
-    private String name;
-
-    /**
-     * 简介
-     */
-    private String introduction;
-
-    /**
-     * 发行时间
-     */
-    private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
-    private LocalDateTime updateTime;
+    private String singerId;
 
     /**
      * 照片
@@ -66,6 +55,32 @@ public class Song implements Serializable {
      * url
      */
     private String url;
+
+
+    /**
+     * 歌曲名
+     */
+    private String name;
+
+    /**
+     * 简介
+     */
+    private String introduction;
+
+    /**
+     * 是否下载
+     */
+    private int isDownload;
+
+    /**
+     * 发行时间
+     */
+    private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    private LocalDateTime updateTime;
 
 
 }
