@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.*;
 
@@ -170,24 +171,26 @@ public class ReptileUtils {
                             .setIntroduction(introduction);
 
                     // 将歌手信息插入数据库
-//                    int insert = singerMapper.insert(singer);
+                    int insert = singerMapper.insert(singer);
 //                    System.out.println(insert);
 
                     // 获取当前歌手下所有热门歌曲
                     for (Element el : songElements) {
                         String songId = el.getElementsByTag("a").attr("href").replaceAll("[^0-9]", "");
                         String title = el.text();
-                        System.out.println("歌曲id：" + songId);
-                        System.out.println("歌曲名：" + title);
+//                        System.out.println("歌曲id：" + songId);
+//                        System.out.println("歌曲名：" + title);
 
+                        String realSongUrl = "http://music.163.com/song/media/outer/url?id=" + songId;
                         // 将数据封装，插入数据库
                         Song song = new Song()
                                 .setSongId(songId)
                                 .setSingerId(singerId)
                                 .setName(title)
+                                .setUrl(realSongUrl)
                                 .setIsDownload(0);
                         // 将歌曲信息插入数据库
-//                        int insert1 = songMapper.insert(song);
+                        int insert1 = songMapper.insert(song);
 //                        System.out.println(insert1);
                         cnt++;
 

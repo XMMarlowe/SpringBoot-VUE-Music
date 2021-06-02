@@ -1,6 +1,8 @@
 package com.marlowe.music.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -64,6 +66,18 @@ public class Singer implements Serializable {
      * 地区
      */
     private String location;
+
+    /**
+     * 发行时间
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime updateTime;
 
     /**
      * 简介
