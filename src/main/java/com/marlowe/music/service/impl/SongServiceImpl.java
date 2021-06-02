@@ -1,9 +1,11 @@
 package com.marlowe.music.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.marlowe.music.entity.Song;
 import com.marlowe.music.mapper.SongMapper;
 import com.marlowe.music.service.ISongService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,9 @@ import java.util.List;
 @Service
 public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements ISongService {
 
+    @Autowired
+    private SongMapper songMapper;
+
 
     /**
      * 添加歌曲
@@ -28,29 +33,18 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      */
     @Override
     public boolean addSong(Song song) {
-        return false;
+        return songMapper.insert(song) > 0;
     }
 
     /**
-     * 更新歌曲信息
+     * 更新歌曲信息，只允许修改歌词
      *
      * @param song
      * @return
      */
     @Override
     public boolean updateSongMsg(Song song) {
-        return false;
-    }
-
-    /**
-     * 更新歌曲url
-     *
-     * @param song
-     * @return
-     */
-    @Override
-    public boolean updateSongUrl(Song song) {
-        return false;
+        return songMapper.update(song, null) > 0;
     }
 
     /**
@@ -61,7 +55,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      */
     @Override
     public boolean updateSongPic(Song song) {
-        return false;
+        return songMapper.update(song, null) > 0;
     }
 
     /**
@@ -72,7 +66,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      */
     @Override
     public boolean deleteSong(Integer id) {
-        return false;
+        return songMapper.deleteById(id) > 0;
     }
 
     /**
@@ -82,18 +76,31 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      */
     @Override
     public List<Song> allSong() {
-        return null;
+        return songMapper.selectList(null);
     }
 
     /**
-     * 根据歌手id查询歌曲
+     * 根据歌手id查询此歌手的所有歌曲
      *
      * @param singerId
      * @return
      */
     @Override
     public List<Song> findSongBySingerId(Integer singerId) {
-        return null;
+        QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("singerId", singerId);
+        return songMapper.selectList(queryWrapper);
+    }
+
+    /**
+     * 根据歌手名字查找此歌手下面的所有歌曲
+     *
+     * @param name
+     * @return
+     */
+    @Override
+    public List<Song> findSongBySingerName(String name) {
+        return songMapper.findSongBySingerName(name);
     }
 
     /**
@@ -103,19 +110,8 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      * @return
      */
     @Override
-    public List<Song> findSongById(Integer id) {
-        return null;
-    }
-
-    /**
-     * 根据歌手名字查找歌曲
-     *
-     * @param name
-     * @return
-     */
-    @Override
-    public List<Song> findSongBySingerName(String name) {
-        return null;
+    public Song findSongById(Integer id) {
+        return songMapper.selectById(id);
     }
 
     /**
@@ -126,6 +122,8 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      */
     @Override
     public List<Song> findSongByName(String name) {
-        return null;
+        QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", name);
+        return songMapper.selectList(queryWrapper);
     }
 }

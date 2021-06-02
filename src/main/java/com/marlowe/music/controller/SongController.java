@@ -1,6 +1,8 @@
 package com.marlowe.music.controller;
 
 
+import com.marlowe.music.service.impl.SongServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -16,5 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/song")
 public class SongController {
+
+    @Autowired
+    private SongServiceImpl songService;
 
 }

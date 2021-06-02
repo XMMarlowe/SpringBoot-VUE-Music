@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.marlowe.music.mapper.SongMapper">
 
+    <select id="findSongBySingerName" resultType="com.marlowe.music.entity.Song">
+        select song.*
+        from song
+        left join singer on
+        song.singer_id = singer.singer_id
+        where singer.name like #{name,jdbcType=VARCHAR} ;
+    </select>
+
 </mapper>
