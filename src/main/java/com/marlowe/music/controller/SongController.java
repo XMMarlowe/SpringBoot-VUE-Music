@@ -121,9 +121,10 @@ public class SongController {
      * @return
      */
     @ApiOperation(value = "查询指定歌手ID的所有歌曲")
-    @GetMapping("/singer-id/detail/{singerId}")
-    public Result<Song> findSongsBySingerId(@PathVariable("singerId") int singerId) {
-        List<Song> songs = songService.findSongBySingerId(singerId);
+    @GetMapping("/singer-id/detail/{singerId}/{pageNo}/{pageSize}")
+    public Result<Song> findSongsBySingerId(@PathVariable("singerId") int singerId, @PathVariable int pageNo, @PathVariable int pageSize) {
+        PageInfo<Song> pageInfo = songService.findSongBySingerId(singerId, pageNo, pageSize);
+        List<Song> songs = pageInfo.getList();
         return Result.ok(songs);
     }
 
@@ -135,10 +136,11 @@ public class SongController {
      * @return
      */
     @ApiOperation(value = "查询指定歌手名的所有歌曲")
-    @GetMapping("/singer-name/detail/{singerName}")
-    public Result<List<Song>> findSongsBySingerName(@PathVariable String singerName) {
+    @GetMapping("/singer-name/detail/{singerName}/{pageNo}/{pageSize}")
+    public Result<List<Song>> findSongsBySingerName(@PathVariable String singerName, @PathVariable int pageNo, @PathVariable int pageSize) {
         log.info("singerName = " + singerName);
-        List<Song> songs = songService.findSongBySingerName(singerName);
+        PageInfo<Song> pageInfo = songService.findSongBySingerName(singerName, pageNo, pageSize);
+        List<Song> songs = pageInfo.getList();
         return Result.ok(songs);
     }
 
@@ -149,9 +151,10 @@ public class SongController {
      * @return
      */
     @ApiOperation(value = "查询指定歌曲名的歌曲")
-    @GetMapping("/song-name/detail/{songName}")
-    public Result<List<Song>> findSongBySongName(@PathVariable String songName) {
-        List<Song> songs = songService.findSongByName(songName);
+    @GetMapping("/song-name/detail/{songName}/{pageNo}/{pageSize}")
+    public Result<List<Song>> findSongBySongName(@PathVariable String songName, @PathVariable int pageNo, @PathVariable int pageSize) {
+        PageInfo<Song> pageInfo = songService.findSongByName(songName,pageNo,pageSize);
+        List<Song> songs = pageInfo.getList();
         return Result.ok(songs);
     }
 

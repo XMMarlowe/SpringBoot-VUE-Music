@@ -94,10 +94,14 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      * @return
      */
     @Override
-    public List<Song> findSongBySingerId(Integer singerId) {
+    public PageInfo<Song> findSongBySingerId(Integer singerId,int pageNo,int pageSize) {
+        // 设置分页查询参数
+        PageHelper.startPage(pageNo, pageSize);
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("singer_id", singerId);
-        return songMapper.selectList(queryWrapper);
+        List<Song> songs = songMapper.selectList(queryWrapper);
+        PageInfo<Song> pageInfo = new PageInfo(songs);
+        return pageInfo;
     }
 
     /**
@@ -107,10 +111,14 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      * @return
      */
     @Override
-    public List<Song> findSongBySingerName(String name) {
+    public PageInfo<Song> findSongBySingerName(String name,int pageNo,int pageSize) {
+        // 设置分页查询参数
+        PageHelper.startPage(pageNo, pageSize);
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("singer_name", name);
-        return songMapper.selectList(queryWrapper);
+        List<Song> songs = songMapper.selectList(queryWrapper);
+        PageInfo<Song> pageInfo = new PageInfo(songs);
+        return pageInfo;
     }
 
     /**
@@ -131,9 +139,14 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      * @return
      */
     @Override
-    public List<Song> findSongByName(String name) {
+    public PageInfo<Song> findSongByName(String name,int pageNo,int pageSize) {
+        // 设置分页查询参数
+        PageHelper.startPage(pageNo, pageSize);
+
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("name", name);
-        return songMapper.selectList(queryWrapper);
+        List<Song> songs = songMapper.selectList(queryWrapper);
+        PageInfo<Song> pageInfo = new PageInfo(songs);
+        return pageInfo;
     }
 }

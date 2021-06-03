@@ -1,16 +1,16 @@
 package com.marlowe.music.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.marlowe.music.entity.Singer;
+import com.marlowe.music.entity.Song;
 import com.marlowe.music.mapper.SingerMapper;
 import com.marlowe.music.service.ISingerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,8 +30,12 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
 
 
     @Override
-    public List<Singer> allSinger() {
-        return singerMapper.selectList(null);
+    public PageInfo<Singer> allSinger(int pageNo, int pageSize) {
+        // 设置分页查询参数
+        PageHelper.startPage(pageNo, pageSize);
+        List<Singer> singers = singerMapper.selectList(null);
+        PageInfo<Singer> pageInfo = new PageInfo(singers);
+        return pageInfo;
     }
 
 
@@ -78,11 +82,14 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
      * @return
      */
     @Override
-    public List<Singer> findSingerByName(String name) {
+    public PageInfo<Singer> findSingerByName(String name, int pageNo, int pageSize) {
+        // 设置分页查询参数
+        PageHelper.startPage(pageNo, pageSize);
         QueryWrapper<Singer> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
-        List<Singer> singerList = singerMapper.selectList(queryWrapper);
-        return singerList;
+        queryWrapper.like("name", name);
+        List<Singer> singers = singerMapper.selectList(queryWrapper);
+        PageInfo<Singer> pageInfo = new PageInfo(singers);
+        return pageInfo;
     }
 
     /**
@@ -91,10 +98,13 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
      * @return
      */
     @Override
-    public List<Singer> findSingerBySex(int sex) {
+    public PageInfo<Singer> findSingerBySex(int sex, int pageNo, int pageSize) {
+        // 设置分页查询参数
+        PageHelper.startPage(pageNo, pageSize);
         QueryWrapper<Singer> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("sex", sex);
-        List<Singer> singerList = singerMapper.selectList(queryWrapper);
-        return singerList;
+        List<Singer> singers = singerMapper.selectList(queryWrapper);
+        PageInfo<Singer> pageInfo = new PageInfo(singers);
+        return pageInfo;
     }
 }

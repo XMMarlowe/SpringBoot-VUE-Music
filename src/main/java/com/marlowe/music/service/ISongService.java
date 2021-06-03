@@ -62,7 +62,7 @@ public interface ISongService extends IService<Song> {
      * @param singerId
      * @return
      */
-    List<Song> findSongBySingerId(Integer singerId);
+    PageInfo<Song> findSongBySingerId(Integer singerId, int pageNo, int pageSize);
 
     /**
      * 根据歌手名字查找此歌手下面的所有歌曲
@@ -70,7 +70,7 @@ public interface ISongService extends IService<Song> {
      * @param name
      * @return
      */
-    List<Song> findSongBySingerName(String name);
+    PageInfo<Song> findSongBySingerName(String name, int pageNo, int pageSize);
 
     /**
      * 根据id查找歌曲
@@ -87,5 +87,5 @@ public interface ISongService extends IService<Song> {
      * @param name
      * @return
      */
-    List<Song> findSongByName(String name);
+    PageInfo<Song> findSongByName(String name, int pageNo, int pageSize);
 }

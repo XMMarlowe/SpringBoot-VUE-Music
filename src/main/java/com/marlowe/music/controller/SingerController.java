@@ -1,6 +1,7 @@
 package com.marlowe.music.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.Singer;
 import com.marlowe.music.service.ISingerService;
@@ -105,9 +106,10 @@ public class SingerController {
      * @return
      */
     @ApiOperation(value = "根据姓名查找歌手")
-    @GetMapping("detail-name/{name}")
-    public Result<List<Singer>> findSingerByName(@PathVariable("name") String name) {
-        List<Singer> singers = singerService.findSingerByName(name);
+    @GetMapping("detail-name/{name}/{pageNo}/{pageSize}")
+    public Result<List<Singer>> findSingerByName(@PathVariable("name") String name, @PathVariable int pageNo, @PathVariable int pageSize) {
+        PageInfo<Singer> pageInfo = singerService.findSingerByName(name, pageNo, pageSize);
+        List<Singer> singers = pageInfo.getList();
         return Result.ok(singers);
     }
 
@@ -117,9 +119,10 @@ public class SingerController {
      * @return
      */
     @ApiOperation(value = "根据性别查找歌手")
-    @GetMapping("detail-sex/{sex}")
-    public Result<List<Singer>> findSingerBySex(@PathVariable("sex") int sex) {
-        List<Singer> singers = singerService.findSingerBySex(sex);
+    @GetMapping("detail-sex/{sex}/{pageNo}/{pageSize}")
+    public Result<List<Singer>> findSingerBySex(@PathVariable("sex") int sex, @PathVariable int pageNo, @PathVariable int pageSize) {
+        PageInfo<Singer> pageInfo = singerService.findSingerBySex(sex, pageNo, pageSize);
+        List<Singer> singers = pageInfo.getList();
         return Result.ok(singers);
     }
 
@@ -130,10 +133,10 @@ public class SingerController {
      * @return
      */
     @ApiOperation(value = "查询所有歌手")
-    @GetMapping("allSinger")
-    public Result<List<Singer>> allSinger() {
-        List<Singer> singers = singerService.allSinger();
-        Result result = Result.ok(singers);
+    @GetMapping("allSinger/{pageNo}/{pageSize}")
+    public Result<List<Singer>> allSinger(@PathVariable int pageNo, @PathVariable int pageSize) {
+        PageInfo<Singer> pageInfo = singerService.allSinger(pageNo, pageSize);
+        List<Singer> singers = pageInfo.getList();
         return Result.ok(singers);
     }
 }

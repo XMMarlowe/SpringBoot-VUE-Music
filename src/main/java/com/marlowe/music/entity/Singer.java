@@ -46,10 +46,7 @@ public class Singer implements Serializable {
      */
     private String name;
 
-    /**
-     * 歌手姓名
-     */
-    private String singerName;
+
 
 
     /**

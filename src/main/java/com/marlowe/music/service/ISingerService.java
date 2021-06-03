@@ -1,8 +1,10 @@
 package com.marlowe.music.service;
 
+import com.github.pagehelper.PageInfo;
 import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.Singer;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.marlowe.music.entity.Song;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -24,7 +26,7 @@ public interface ISingerService extends IService<Singer> {
      *
      * @return
      */
-    List<Singer> allSinger();
+    PageInfo<Singer> allSinger(int pageNo,int pageSize);
 
     /**
      * 添加歌手
@@ -62,7 +64,7 @@ public interface ISingerService extends IService<Singer> {
      *
      * @return
      */
-    List<Singer> findSingerByName(String name);
+    PageInfo<Singer> findSingerByName(String name,int pageNo,int pageSize);
 
 
     /**
@@ -70,6 +72,6 @@ public interface ISingerService extends IService<Singer> {
      *
      * @return
      */
-    List<Singer> findSingerBySex(int sex);
+    PageInfo<Singer> findSingerBySex(int sex,int pageNo,int pageSize);
 
 }
