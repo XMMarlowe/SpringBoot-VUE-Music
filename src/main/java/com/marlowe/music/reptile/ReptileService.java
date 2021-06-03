@@ -1,6 +1,7 @@
 package com.marlowe.music.reptile;
 
 import com.marlowe.music.commons.result.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -15,6 +16,8 @@ import java.util.Map;
 @Service
 public class ReptileService {
 
+    @Autowired
+    private ReptileUtils reptileUtils;
     /**
      * 爬取歌曲存入数据库
      *
@@ -48,7 +51,6 @@ public class ReptileService {
         // 通过 pageId 获得页面下的所有歌手id，再根据歌手id爬取歌手页面下的所有歌曲
 
         for (Map.Entry<Integer, String> entry : map.entrySet()) {
-            ReptileUtils reptileUtils = new ReptileUtils();
             reptileUtils.getAllSongs(entry.getKey());
         }
 

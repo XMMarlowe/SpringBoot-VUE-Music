@@ -48,7 +48,7 @@ public class SingerController {
      */
     @ApiOperation(value = "添加歌手")
     @PostMapping("add")
-    public Result<Singer> addSinger(@RequestBody Singer singer) {
+    public Result addSinger(@RequestBody Singer singer) {
         singerService.addSinger(singer);
         return Result.ok("添加成功");
     }

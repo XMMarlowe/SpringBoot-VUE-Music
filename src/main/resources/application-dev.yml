@@ -22,9 +22,9 @@ mybatis:
     map-underscore-to-camel-case: true
     call-setters-on-nulls: true
 
-logging:
-  level:
-    com.marlowe.music.mapper: DEBUG
+#logging:
+#  level:
+#    com.marlowe.music.mapper: DEBUG
 
 
 
