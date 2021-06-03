@@ -10,26 +10,35 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 #mybatis:
-#  type-aliases-package: com.marlowe.music.entity
+#  type-aliases-package: com.marlowe.domain
 #  mapper-locations: mapper/*.xml
 #  configuration:
 #    map-underscore-to-camel-case: true
 #    call-setters-on-nulls: true
 
-# PageHelper 分页插件配置
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
-
-logging:
-  level:
-    com.marlowe.music.mapper: DEBUG
-
 mybatis-plus:
-  mapper-locations: mapper/*.xml
+  # xml地址
+  mapper-locations: classpath:mapper/*Mapper.xml
+  # 实体扫描，多个package用逗号或者分号分隔
   type-aliases-package: com.marlowe.music.entity   #自己的实体类地址
-#  configuration:
-#    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# PageHelper 分页插件配置
+#pagehelper:
+#  dialect: com.github.pagehelper.dialect.helper.MySqlDialect
+#  reasonable: true
+#  support-methods-arguments: true
+#  params: count=countSql
+
+
+#logging:
+#  level:
+#    com.marlowe.music.mapper: DEBUG
+
+
+
+
+
+

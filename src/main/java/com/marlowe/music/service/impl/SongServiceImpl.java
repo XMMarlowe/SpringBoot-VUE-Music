@@ -1,8 +1,6 @@
 package com.marlowe.music.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.marlowe.music.entity.Song;
@@ -79,12 +77,14 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      * @return
      */
     @Override
-    public List<Song> allSong(int pageNo, int pageSize) {
+    public PageInfo<Song> allSong(int pageNo, int pageSize) {
         // 设置分页查询参数
         PageHelper.startPage(pageNo, pageSize);
+
         List<Song> songs = songMapper.selectList(null);
-        PageInfo pageInfo = new PageInfo(songs);
-        return pageInfo.getList();
+
+        PageInfo<Song> pageInfo = new PageInfo(songs);
+        return pageInfo;
     }
 
     /**
@@ -109,7 +109,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
     @Override
     public List<Song> findSongBySingerName(String name) {
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("singer_name", name);
+        queryWrapper.like("singer_name", name);
         return songMapper.selectList(queryWrapper);
     }
 

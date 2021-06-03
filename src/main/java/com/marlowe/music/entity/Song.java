@@ -8,10 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -24,8 +22,6 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Song implements Serializable {
 
@@ -69,10 +65,9 @@ public class Song implements Serializable {
     private String name;
 
     /**
-     * 歌手姓名
+     * 歌手名
      */
     private String singerName;
-
     /**
      * 简介
      */

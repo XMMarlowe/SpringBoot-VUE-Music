@@ -1,5 +1,6 @@
 package com.marlowe.music.service;
 
+import com.github.pagehelper.PageInfo;
 import com.marlowe.music.entity.Song;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -53,7 +54,7 @@ public interface ISongService extends IService<Song> {
      *
      * @return
      */
-    List<Song> allSong(int pageNo,int pageSize);
+    PageInfo<Song> allSong(int pageNo, int pageSize);
 
     /**
      * 根据歌手id查询此歌手的所有歌曲

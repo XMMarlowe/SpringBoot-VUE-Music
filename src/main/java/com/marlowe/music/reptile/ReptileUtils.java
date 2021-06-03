@@ -245,7 +245,6 @@ public class ReptileUtils {
                                 .setLyric(lyric)
                                 .setUrl(songRealUrl)
                                 .setName(title)
-                                .setSingerName(singerName)
                                 .setIsDownload(0);
                         // 将歌曲信息插入数据库
                         int insert1 = songMapper.insert(song);
