@@ -2,12 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.marlowe.music.mapper.SongMapper">
 
-    <select id="findSongBySingerName" resultType="com.marlowe.music.entity.Song">
-        select song.*
-        from song
-        left join singer on
-        song.singer_id = singer.singer_id
-        where singer.name like #{name,jdbcType=VARCHAR} ;
-    </select>
+
+<!--    <resultMap id="BaseResultMap" type="com.marlowe.music.entity.Song" >-->
+<!--        <id column="id" property="id" jdbcType="INTEGER" />-->
+<!--        <result column="song_id" property="songId" jdbcType="VARCHAR" />-->
+<!--        <result column="singer_id" property="singerId" jdbcType="VARCHAR" />-->
+<!--        <result column="pic" property="pic" jdbcType="VARCHAR" />-->
+<!--        <result column="lyric" property="lyric" jdbcType="VARCHAR" />-->
+<!--        <result column="url" property="url" jdbcType="VARCHAR" />-->
+<!--        <result column="name" property="name" jdbcType="VARCHAR" />-->
+<!--        <result column="introduction" property="introduction" jdbcType="VARCHAR" />-->
+<!--        <result column="is_download" property="isDownload" jdbcType="INTEGER" />-->
+<!--        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />-->
+<!--        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />-->
+<!--    </resultMap>-->
+
+<!--    <select id="findSongBySingerName" resultType="com.marlowe.music.entity.Song">-->
+<!--        select song.*-->
+<!--        from song-->
+<!--        left join singer on-->
+<!--        song.singer_id = singer.singer_id-->
+<!--        where singer.name like #{name,jdbcType=VARCHAR} ;-->
+<!--    </select>-->
 
 </mapper>

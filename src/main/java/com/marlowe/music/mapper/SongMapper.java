@@ -16,10 +16,10 @@ import java.util.List;
 public interface SongMapper extends BaseMapper<Song> {
 
 
-    /**
-     * 根据歌手名查询此歌手的所有歌曲
-     * @param name
-     * @return
-     */
-    List<Song> findSongBySingerName(String name);
+//    /**
+//     * 根据歌手名查询此歌手的所有歌曲
+//     * @param name
+//     * @return
+//     */
+//    List<Song> findSongBySingerName(String name);
 }

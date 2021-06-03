@@ -1,6 +1,10 @@
 package com.marlowe.music.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.marlowe.music.entity.Song;
 import com.marlowe.music.mapper.SongMapper;
 import com.marlowe.music.service.ISongService;
@@ -75,8 +79,12 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      * @return
      */
     @Override
-    public List<Song> allSong() {
-        return songMapper.selectList(null);
+    public List<Song> allSong(int pageNo, int pageSize) {
+        // 设置分页查询参数
+        PageHelper.startPage(pageNo, pageSize);
+        List<Song> songs = songMapper.selectList(null);
+        PageInfo pageInfo = new PageInfo(songs);
+        return pageInfo.getList();
     }
 
     /**
@@ -88,7 +96,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
     @Override
     public List<Song> findSongBySingerId(Integer singerId) {
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("singerId", singerId);
+        queryWrapper.eq("singer_id", singerId);
         return songMapper.selectList(queryWrapper);
     }
 
@@ -100,7 +108,9 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      */
     @Override
     public List<Song> findSongBySingerName(String name) {
-        return songMapper.findSongBySingerName(name);
+        QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("singer_name", name);
+        return songMapper.selectList(queryWrapper);
     }
 
     /**

@@ -5,7 +5,9 @@ import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.Singer;
 import com.marlowe.music.entity.Song;
 import com.marlowe.music.service.impl.SongServiceImpl;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +32,9 @@ import java.util.List;
  * @since 2021-05-30
  */
 @RestController
+@Api(tags = "歌曲管理控制类")
 @RequestMapping("/song")
+@Slf4j
 public class SongController {
 
     @Autowired
@@ -79,9 +83,9 @@ public class SongController {
      * @return
      */
     @ApiOperation(value = "查询所有歌曲")
-    @GetMapping("allSong")
-    public Result<List<Singer>> allSong() {
-        List<Song> songs = songService.allSong();
+    @GetMapping("allSong/{pageNo}/{pageSize}")
+    public Result<List<Singer>> allSong(@PathVariable int pageNo, @PathVariable int pageSize) {
+        List<Song> songs = songService.allSong(pageNo, pageSize);
         return Result.ok(songs);
     }
 
@@ -115,8 +119,8 @@ public class SongController {
      * @return
      */
     @ApiOperation(value = "查询指定歌手ID的所有歌曲")
-    @GetMapping("/singer-id/detail/{singerId}")
-    public Result<Song> findSongsBySingerId(@PathVariable("singerId") int singerId) {
+    @GetMapping("singer-id/detail/{singerId}")
+    public Result<List<Song>> findSongsBySingerId(@PathVariable("singerId") int singerId) {
         List<Song> songs = songService.findSongBySingerId(singerId);
         return Result.ok(songs);
     }
@@ -129,8 +133,10 @@ public class SongController {
      * @return
      */
     @ApiOperation(value = "查询指定歌手名的所有歌曲")
-    @GetMapping("/singer-name/detail/{singerName}")
-    public Result<Song> findSongsBySingerName(@PathVariable String singerName) {
+    @GetMapping("singer-name/detail/{singerName}")
+    public Result<List<Song>> findSongsBySingerName(@PathVariable String singerName) {
+        singerName = "%" + singerName + "%";
+        log.info("singerName=" + singerName);
         List<Song> songs = songService.findSongBySingerName(singerName);
         return Result.ok(songs);
     }
@@ -142,8 +148,8 @@ public class SongController {
      * @return
      */
     @ApiOperation(value = "查询指定歌曲名的歌曲")
-    @GetMapping("/song-name/detail/{songName}")
-    public Result<Song> findSongBySongName(@PathVariable String songName) {
+    @GetMapping("song-name/detail/{songName}")
+    public Result<List<Song>> findSongBySongName(@PathVariable("songName") String songName) {
         List<Song> songs = songService.findSongByName(songName);
         return Result.ok(songs);
     }
@@ -194,11 +200,6 @@ public class SongController {
 
         return null;
     }
-
-
-
-
-
 
 
 }

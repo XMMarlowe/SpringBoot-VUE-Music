@@ -4,30 +4,32 @@ server:
     context-path: /
 spring:
   datasource:
-    druid:
-      url: jdbc:mysql://116.63.164.16:3307/visitcqut?useUnicode=t
-        rue&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyD
-        atetimeCode=false&serverTimezone=UTC
-      username: root
-      password: root
-      initial-size: 1
-      min-idle: 1
-      max-active: 20
-      test-on-borrow: true
-      driver-class-name: com.mysql.cj.jdbc.Driver
-mybatis:
-  type-aliases-package: com.marlowe.domain
+    url: jdbc:mysql://localhost:3306/music?serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#mybatis:
+#  type-aliases-package: com.marlowe.music.entity
+#  mapper-locations: mapper/*.xml
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    call-setters-on-nulls: true
+
+# PageHelper 分页插件配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+logging:
+  level:
+    com.marlowe.music.mapper: DEBUG
+
+mybatis-plus:
   mapper-locations: mapper/*.xml
-  configuration:
-    map-underscore-to-camel-case: true
-    call-setters-on-nulls: true
-
-#logging:
-#  level:
-#    com.marlowe.music.mapper: DEBUG
-
-
-
-
-
-
+  type-aliases-package: com.marlowe.music.entity   #自己的实体类地址
+#  configuration:
+#    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

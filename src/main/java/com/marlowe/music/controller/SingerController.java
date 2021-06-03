@@ -133,7 +133,6 @@ public class SingerController {
     @GetMapping("allSinger")
     public Result<List<Singer>> allSinger() {
         List<Singer> singers = singerService.allSinger();
-        Result result = Result.ok(singers);
         return Result.ok(singers);
     }
 }

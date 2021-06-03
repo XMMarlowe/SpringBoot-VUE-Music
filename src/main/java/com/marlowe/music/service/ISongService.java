@@ -53,7 +53,7 @@ public interface ISongService extends IService<Song> {
      *
      * @return
      */
-    List<Song> allSong();
+    List<Song> allSong(int pageNo,int pageSize);
 
     /**
      * 根据歌手id查询此歌手的所有歌曲
