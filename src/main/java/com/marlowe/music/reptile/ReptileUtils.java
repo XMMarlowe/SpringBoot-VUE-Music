@@ -1,5 +1,6 @@
 package com.marlowe.music.reptile;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -16,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @program: SpringBoot-VUE-Music
@@ -183,6 +186,7 @@ public class ReptileUtils {
                         System.out.println("歌曲id：" + songId);
                         System.out.println("歌曲名：" + title);
 
+                        // 歌曲真实Url
                         String songRealUrl = "http://music.163.com/song/media/outer/url?id=" + songId;
 
                         // 通过歌曲id，获得歌曲歌词
@@ -197,7 +201,8 @@ public class ReptileUtils {
                                     .header("Referer", "https://music.163.com/")
                                     .header("Host", "music.163.com")
                                     .method(Connection.Method.GET)
-                                    .timeout(30000).execute().charset("utf-8").body(); // 设置请求头等信息，模拟人工访问，超时时间可自行设置
+                                    // 设置请求头等信息，模拟人工访问，超时时间可自行设置
+                                    .timeout(30000).execute().charset("utf-8").body();
 
                             doc4 = Jsoup.parse(res4);
 
@@ -218,21 +223,26 @@ public class ReptileUtils {
                                 }
                             }
 
-//                            JsonElement lrc1 = jsonObject.get("lrc");
-//
-//                            // 获取歌词判空
-//                            if (lrc1 != null) {
-//                                JsonObject lrc = lrc1.getAsJsonObject();
-//                                if (lrc != null) {
-//                                    JsonElement lyric1 = lrc.get("lyric");
-//                                    if (lyric1 != null) {
-//                                        String lyric1AsString = lyric1.getAsString();
-//                                        if (lyric1AsString != null) {
-//                                            lyric = lyric1AsString;
-//                                        }
-//                                    }
-//                                }
-//                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        // 歌曲图片url
+                        String songPicUrl = "https://music.163.com/song?id=" + songId;
+
+                        Document doc5 = null;
+                        String songPic = "";
+
+                        try {
+                            String res5 = Jsoup.connect(songPicUrl)
+                                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36")
+                                    .header("Cookie", "ntes_nnid=6c5b87bd25a17a9fd9692580e5c94f78,1565912650142; _ntes_nuid=6c5b87bd25a17a9fd9692580e5c94f78; _iuqxldmzr_=32; WM_TID=LDdg6Rcj9ENEBRFUUFc4pPF4%2B6vTAn2G; WM_NI=R9FV8%2B3KZYFzFTyT7isTQivbb2VLf%2FzcQWAi%2BQdwZbxir0FYRR17q5zGEaYaTxwuyNrXXwr8kuNyRC2wcdeCeCAMWeyd1e8YJR%2FyJPg1kc3dMwiiFWuGVyQtxssnI3kBT04%3D; WM_NIKE=9ca17ae2e6ffcda170e2e6eed1cf4eacb8bb8ac641899e8fb3c85b928f8e84f333a7939790c14f8a90fdd3d92af0fea7c3b92a92e78ab7bb21f19596bac572868cb7b5b663b18c9f8af56aa2ee9aade525babd9fb8c463e98fac98d96abcb7bed1c553928effd8f43fba998b82dc6b98a8b996fc46b2889898f134a9ab829ad149f2a9ad85e849a79d8faed66fbbbcff86bb538a8ee19ac95ca5efa584b2708fa9a78ac55db7999a9ad480bcadbd8fcc39a99e9cd1b737e2a3; JSESSIONID-WYYY=yBXBK%2FIFCVHGtcBTi3%5CSUeDQMvfzApFAMBZzlZ%2BENNt7n2f9j2SCTvBRQpFACIc5EnGK3%2BtFhTQJWOhtCkJvHZ8olJ83RYG8Exukhj6Ftzw%2FBwylje03bjPW4Vl9IXXOHeNIRWxO4%2BKndGOJ0HjhnNZJtoESJht8PfF%2FfzAVXh6kOWiq%3A1566909226292")
+                                    .header("Referer", "https://music.163.com/")
+                                    .method(Connection.Method.GET)
+                                    .timeout(30000).execute().charset("utf-8").body(); // 设置请求头等信息，模拟人工访问，超时时间可自行设置
+                            doc5 = Jsoup.parse(res5);
+
+                            songPic = doc5.select(".u-cover-6").select("img").attr("data-src");
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -244,7 +254,9 @@ public class ReptileUtils {
                                 .setSingerId(singerId)
                                 .setLyric(lyric)
                                 .setUrl(songRealUrl)
+                                .setPic(songPic)
                                 .setName(title)
+                                .setSingerName(singerName)
                                 .setIsDownload(0);
                         // 将歌曲信息插入数据库
                         int insert1 = songMapper.insert(song);
