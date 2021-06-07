@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 歌曲列表 Mapper 接口
+ * 歌单表 Mapper 接口
  * </p>
  *
  * @author marlowe
- * @since 2021-05-30
+ * @since 2021-06-07
  */
 public interface SongListMapper extends BaseMapper<SongList> {
 

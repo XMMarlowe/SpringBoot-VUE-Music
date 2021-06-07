@@ -86,19 +86,6 @@ public class SingerController {
         }
     }
 
-    /**
-     * 更新歌手头像
-     *
-     * @return
-     */
-    @ApiOperation(value = "更新歌手头像")
-    @PostMapping("avatar/update")
-    public Result updateSingerPic(@RequestParam("file") MultipartFile avatarFile,
-                                  @RequestParam("id") int id) {
-
-        return null;
-    }
-
 
     /**
      * 根据姓名查找歌手

@@ -1,23 +1,31 @@
 package com.marlowe.music.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
- * 歌单表
+ * 歌词报错表
  * </p>
  *
  * @author marlowe
  * @since 2021-06-07
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class SongList implements Serializable {
+public class WorkOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,33 +36,35 @@ public class SongList implements Serializable {
     private Integer id;
 
     /**
-     * 歌单名称
+     * 当前状态：1：已经解决，0：未解决
      */
-    private String title;
+    private int status;
 
     /**
-     * 歌单封面
+     * 歌曲id
      */
-    private String pic;
+    private Integer songId;
 
     /**
-     * 歌单简介
+     * 歌词
      */
-    private String introduction;
+    private String lyric;
 
     /**
-     * 风格
+     * 员工id
      */
-    private String style;
+    private Integer userId;
 
     /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime updateTime;
 
 

@@ -94,7 +94,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      * @return
      */
     @Override
-    public PageInfo<Song> findSongBySingerId(Integer singerId,int pageNo,int pageSize) {
+    public PageInfo<Song> findSongBySingerId(Integer singerId, int pageNo, int pageSize) {
         // 设置分页查询参数
         PageHelper.startPage(pageNo, pageSize);
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
@@ -111,7 +111,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      * @return
      */
     @Override
-    public PageInfo<Song> findSongBySingerName(String name,int pageNo,int pageSize) {
+    public PageInfo<Song> findSongBySingerName(String name, int pageNo, int pageSize) {
         // 设置分页查询参数
         PageHelper.startPage(pageNo, pageSize);
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
@@ -129,7 +129,9 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      */
     @Override
     public Song findSongById(Integer id) {
-        return songMapper.selectById(id);
+        QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("song_id", id);
+        return songMapper.selectOne(queryWrapper);
     }
 
     /**
@@ -139,7 +141,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      * @return
      */
     @Override
-    public PageInfo<Song> findSongByName(String name,int pageNo,int pageSize) {
+    public PageInfo<Song> findSongByName(String name, int pageNo, int pageSize) {
         // 设置分页查询参数
         PageHelper.startPage(pageNo, pageSize);
 

@@ -8,11 +8,11 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 歌单表
+ * 歌曲对应歌单表
  * </p>
  *
  * @author marlowe
- * @since 2021-05-30
+ * @since 2021-06-07
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -21,7 +21,7 @@ public class ListSong implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 主键
+     * 主键id
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -32,7 +32,7 @@ public class ListSong implements Serializable {
     private Integer songId;
 
     /**
-     * 歌曲列表id
+     * 歌单id
      */
     private Integer songListId;
 

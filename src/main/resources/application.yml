@@ -7,9 +7,7 @@ spring:
     active: dev
   datasource:
     druid:
-      url: jdbc:mysql://116.63.164.16:3307/visitcqut?useUnicode=t
-        rue&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyD
-        atetimeCode=false&serverTimezone=UTC
+      url: jdbc:mysql://lcoalhost:3306/music?serverTimezone=Asia/Shanghai
       username: root
       password: root
       initial-size: 1
@@ -17,11 +15,16 @@ spring:
       max-active: 20
       test-on-borrow: true
       driver-class-name: com.mysql.cj.jdbc.Driver
-mybatis:
-  type-aliases-package: com.visitcqut.domain
-  mapper-locations: mapper/*.xml
+
+
+mybatis-plus:
+  # xml地址
+  mapper-locations: classpath:mapper/*Mapper.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.marlowe.music.entity   #自己的实体类地址
   configuration:
-    map-underscore-to-camel-case: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
 

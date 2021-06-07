@@ -55,8 +55,8 @@ public class SongController {
     public class MyPicConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/songPic/**").addResourceLocations("file:D:\\IDE_Project\\JavaLearning\\music-website\\music-server\\img\\songPic");
-            registry.addResourceHandler("/song/**").addResourceLocations("file:D:\\IDE_Project\\JavaLearning\\music-website\\music-server\\song");
+            registry.addResourceHandler("/img/songPic/**").addResourceLocations("file:D:\\IDE_Project\\JavaLearning\\SpringBoot-VUE-Music\\img\\songPic");
+            registry.addResourceHandler("/song/**").addResourceLocations("file:D:\\IDE_Project\\JavaLearning\\SpringBoot-VUE-Music\\song");
         }
     }
 
@@ -153,7 +153,7 @@ public class SongController {
     @ApiOperation(value = "查询指定歌曲名的歌曲")
     @GetMapping("/song-name/detail/{songName}/{pageNo}/{pageSize}")
     public Result<List<Song>> findSongBySongName(@PathVariable String songName, @PathVariable int pageNo, @PathVariable int pageSize) {
-        PageInfo<Song> pageInfo = songService.findSongByName(songName,pageNo,pageSize);
+        PageInfo<Song> pageInfo = songService.findSongByName(songName, pageNo, pageSize);
         List<Song> songs = pageInfo.getList();
         return Result.ok(songs);
     }
@@ -183,26 +183,13 @@ public class SongController {
      */
     @ApiOperation(value = "更新歌曲信息")
     @PostMapping("update")
-    public Result updateSingerMsg(@RequestBody Song song) {
+    public Result updateSongMsg(@RequestBody Song song) {
         boolean updateSongMsg = songService.updateSongMsg(song);
         if (updateSongMsg) {
             return Result.ok("更新成功");
         } else {
             return Result.ok("更新失败");
         }
-    }
-
-    /**
-     * 更新歌曲图片
-     *
-     * @return
-     */
-    @ApiOperation(value = "更新歌曲图片")
-    @PostMapping("img/update")
-    public Result updateSingerPic(@RequestParam("file") MultipartFile avatarFile,
-                                  @RequestParam("id") int id) {
-
-        return null;
     }
 
 
