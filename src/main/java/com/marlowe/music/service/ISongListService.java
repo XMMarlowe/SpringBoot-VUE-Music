@@ -69,7 +69,7 @@ public interface ISongListService extends IService<SongList> {
     PageInfo<SongList> findSongListByTitle(String title, int pageNo, int pageSize);
 
     /**
-     * 根据歌单风格模糊查询歌单
+     * 根据歌单风格查询歌单
      *
      * @param style
      * @param pageNo

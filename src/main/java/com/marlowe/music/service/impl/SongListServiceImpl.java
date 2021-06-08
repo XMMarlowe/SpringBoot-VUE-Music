@@ -1,11 +1,16 @@
 package com.marlowe.music.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.marlowe.music.entity.SongList;
 import com.marlowe.music.mapper.SongListMapper;
 import com.marlowe.music.service.ISongListService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -18,6 +23,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> implements ISongListService {
 
+    @Autowired
+    private SongListMapper songListMapper;
+
     /**
      * 添加歌单
      *
@@ -26,7 +34,7 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
      */
     @Override
     public boolean addSongList(SongList songList) {
-        return false;
+        return songListMapper.insert(songList) > 0;
     }
 
     /**
@@ -37,7 +45,7 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
      */
     @Override
     public boolean updateSongListMsg(SongList songList) {
-        return false;
+        return songListMapper.update(songList, null) > 0;
     }
 
     /**
@@ -48,7 +56,7 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
      */
     @Override
     public boolean updateSongListImg(SongList songList) {
-        return false;
+        return songListMapper.update(songList, null) > 0;
     }
 
     /**
@@ -59,7 +67,7 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
      */
     @Override
     public boolean deleteSongList(Integer id) {
-        return false;
+        return songListMapper.deleteById(id) > 0;
     }
 
     /**
@@ -71,7 +79,12 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
      */
     @Override
     public PageInfo<SongList> allSongList(int pageNo, int pageSize) {
-        return null;
+        // 设置分页查询参数
+        PageHelper.startPage(pageNo, pageSize);
+
+        List<SongList> songLists = songListMapper.selectList(null);
+        PageInfo<SongList> pageInfo = new PageInfo(songLists);
+        return pageInfo;
     }
 
     /**
@@ -84,11 +97,17 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
      */
     @Override
     public PageInfo<SongList> findSongListByTitle(String title, int pageNo, int pageSize) {
-        return null;
+        // 设置分页查询参数
+        PageHelper.startPage(pageNo, pageSize);
+        QueryWrapper<SongList> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("title", title);
+        List<SongList> songLists = songListMapper.selectList(queryWrapper);
+        PageInfo<SongList> pageInfo = new PageInfo(songLists);
+        return pageInfo;
     }
 
     /**
-     * 根据歌单风格模糊查询歌单
+     * 根据歌单风格查询歌单
      *
      * @param style
      * @param pageNo
@@ -97,6 +116,12 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
      */
     @Override
     public PageInfo<SongList> findSongListByStyle(String style, int pageNo, int pageSize) {
-        return null;
+        // 设置分页查询参数
+        PageHelper.startPage(pageNo, pageSize);
+        QueryWrapper<SongList> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("style", style);
+        List<SongList> songLists = songListMapper.selectList(queryWrapper);
+        PageInfo<SongList> pageInfo = new PageInfo(songLists);
+        return pageInfo;
     }
 }
