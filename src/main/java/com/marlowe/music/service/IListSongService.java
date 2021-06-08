@@ -60,6 +60,15 @@ public interface IListSongService extends IService<ListSong> {
      * @param pageSize
      * @return
      */
-    PageInfo<ListSong> findSongsBySongListId(Integer songListId, int pageNo, int pageSize);
+    PageInfo<ListSong> findSongsBySongListId(int songListId, int pageNo, int pageSize);
+
+
+    /**
+     * 查询指定歌单里面的最后一首歌曲id
+     *
+     * @param songListId
+     * @return
+     */
+    int findLastSongIdBySongListId(int songListId);
 
 }

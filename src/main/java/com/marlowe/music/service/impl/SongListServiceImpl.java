@@ -71,6 +71,29 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     }
 
     /**
+     * 通过id获取歌单信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public SongList findById(int id) {
+        // 在list_song表中查询所有对应歌单的所有歌曲
+        SongList songList = songListMapper.selectById(id);
+        return songList;
+    }
+
+    /**
+     * 获得歌单的数量
+     *
+     * @return
+     */
+    @Override
+    public int getAllSongList() {
+        return songListMapper.selectCount(null);
+    }
+
+    /**
      * 分页查询所有歌单
      *
      * @param pageNo

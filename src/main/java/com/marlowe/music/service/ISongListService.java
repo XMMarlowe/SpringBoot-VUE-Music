@@ -50,6 +50,19 @@ public interface ISongListService extends IService<SongList> {
     boolean deleteSongList(Integer id);
 
     /**
+     * 通过id获取歌单信息
+     * @param id
+     * @return
+     */
+    SongList findById(int id);
+
+    /**
+     * 获得歌单的数量
+     * @return
+     */
+    int getAllSongList();
+
+    /**
      * 分页查询所有歌单
      *
      * @param pageNo

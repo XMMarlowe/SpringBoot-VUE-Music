@@ -89,7 +89,7 @@ public class ListSongServiceImpl extends ServiceImpl<ListSongMapper, ListSong> i
      * @return
      */
     @Override
-    public PageInfo<ListSong> findSongsBySongListId(Integer songListId, int pageNo, int pageSize) {
+    public PageInfo<ListSong> findSongsBySongListId(int songListId, int pageNo, int pageSize) {
         // 设置分页查询参数
         PageHelper.startPage(pageNo, pageSize);
 
@@ -98,5 +98,24 @@ public class ListSongServiceImpl extends ServiceImpl<ListSongMapper, ListSong> i
         List<ListSong> songs = listSongMapper.selectList(queryWrapper);
         PageInfo<ListSong> pageInfo = new PageInfo(songs);
         return pageInfo;
+    }
+
+    /**
+     * 查询指定歌单里面的最后一首歌曲id
+     *
+     * @param songListId
+     * @return
+     */
+    @Override
+    public int findLastSongIdBySongListId(int songListId) {
+        QueryWrapper<ListSong> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("song_list_id",songListId);
+        List<ListSong> listSongs = listSongMapper.selectList(queryWrapper);
+        if (listSongs.size() >= 1){
+            // 将最后一首歌的id返回
+            return listSongs.get(listSongs.size() - 1).getSongId();
+        }
+        // 歌单里面一首歌都没，用默认封面
+        return -1;
     }
 }

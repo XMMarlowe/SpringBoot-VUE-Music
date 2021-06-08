@@ -85,7 +85,6 @@ public class SongController {
     @ApiOperation(value = "查询所有歌曲")
     @GetMapping("allSong/{pageNo}/{pageSize}")
     public Result<List<Song>> allSong(@PathVariable int pageNo, @PathVariable int pageSize) {
-        log.info("pageNo = " + pageNo + "--pageSize = " + pageSize);
         PageInfo<Song> pageInfo = songService.allSong(pageNo, pageSize);
         List<Song> songs = pageInfo.getList();
         return Result.ok(songs);
