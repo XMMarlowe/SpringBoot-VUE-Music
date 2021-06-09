@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author marlowe
- * @since 2021-05-30
+ * @since 2021-06-09
  */
 public interface CommentMapper extends BaseMapper<Comment> {
 

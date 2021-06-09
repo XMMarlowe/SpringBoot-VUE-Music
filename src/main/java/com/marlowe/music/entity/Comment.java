@@ -1,7 +1,10 @@
 package com.marlowe.music.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -15,7 +18,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author marlowe
- * @since 2021-05-30
+ * @since 2021-06-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -24,7 +27,7 @@ public class Comment implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 主键
+     * 主键id
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -40,25 +43,21 @@ public class Comment implements Serializable {
     private Integer songId;
 
     /**
-     * 歌曲列表id
+     * 歌单id
      */
     private Integer songListId;
 
     /**
-     * 评论内容
+     * 评论正文
      */
     private String content;
 
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-
-    /**
-     * 类型
-     */
-    private Integer type;
 
     /**
      * 点赞数
