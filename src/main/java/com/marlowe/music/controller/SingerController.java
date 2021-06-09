@@ -71,11 +71,11 @@ public class SingerController {
     }
 
     /**
-     * 更新歌手信息
+     * 通过主键id更新歌手信息
      *
      * @return
      */
-    @ApiOperation(value = "更新歌手信息")
+    @ApiOperation(value = "通过主键id更新歌手信息")
     @PostMapping("update")
     public Result updateSingerMsg(@RequestBody Singer singer) {
         int update = singerService.updateSingerMsg(singer);

@@ -18,7 +18,7 @@ import java.util.List;
 public interface IListSongService extends IService<ListSong> {
 
     /**
-     * 添加歌曲到歌单
+     * 添加歌曲到歌单，并更新当前歌曲pic为歌单封面
      *
      * @param listSong
      * @return
@@ -34,12 +34,12 @@ public interface IListSongService extends IService<ListSong> {
     boolean updateListSongMsg(ListSong listSong);
 
     /**
-     * 删除歌单里的歌曲
      *
+     * 删除指定歌单id里面的指定歌曲id
      * @param songId
      * @return
      */
-    boolean deleteListSong(Integer songId);
+    boolean deleteListSongBySongIdAndSongListId(Integer songId,Integer songListId);
 
 
     /**
@@ -70,5 +70,8 @@ public interface IListSongService extends IService<ListSong> {
      * @return
      */
     int findLastSongIdBySongListId(int songListId);
+
+
+
 
 }

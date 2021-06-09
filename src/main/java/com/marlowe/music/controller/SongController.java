@@ -176,11 +176,11 @@ public class SongController {
     }
 
     /**
-     * 更新歌曲信息
+     * 根据主键id更新歌曲信息，只允许修改歌词
      *
      * @return
      */
-    @ApiOperation(value = "更新歌曲信息")
+    @ApiOperation(value = "根据主键id更新歌曲信息，只允许修改歌词")
     @PostMapping("update")
     public Result updateSongMsg(@RequestBody Song song) {
         boolean updateSongMsg = songService.updateSongMsg(song);

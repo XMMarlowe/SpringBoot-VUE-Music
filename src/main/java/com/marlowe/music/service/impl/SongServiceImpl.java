@@ -39,14 +39,16 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
     }
 
     /**
-     * 更新歌曲信息，只允许修改歌词
+     * 根据主键id更新歌曲信息，只允许修改歌词
      *
      * @param song
      * @return
      */
     @Override
     public boolean updateSongMsg(Song song) {
-        return songMapper.update(song, null) > 0;
+        QueryWrapper<Song> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("id",song.getId());
+        return songMapper.update(song, queryWrapper) > 0;
     }
 
     /**

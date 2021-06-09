@@ -3,6 +3,7 @@ package com.marlowe.music.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.marlowe.music.entity.ListSong;
 import com.marlowe.music.entity.SongList;
 import com.marlowe.music.mapper.SongListMapper;
 import com.marlowe.music.service.ISongListService;
@@ -45,7 +46,9 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
      */
     @Override
     public boolean updateSongListMsg(SongList songList) {
-        return songListMapper.update(songList, null) > 0;
+        QueryWrapper<SongList> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id",songList.getId());
+        return songListMapper.update(songList, queryWrapper) > 0;
     }
 
     /**
@@ -56,7 +59,8 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
      */
     @Override
     public boolean updateSongListImg(SongList songList) {
-        return songListMapper.update(songList, null) > 0;
+
+        return true;
     }
 
     /**
@@ -146,5 +150,19 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
         List<SongList> songLists = songListMapper.selectList(queryWrapper);
         PageInfo<SongList> pageInfo = new PageInfo(songLists);
         return pageInfo;
+    }
+
+    /**
+     * 根据userId查询该用户创建的所有歌单
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<SongList> findSongListByUserId(int userId) {
+        QueryWrapper<SongList> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",userId);
+        List<SongList> songLists = songListMapper.selectList(queryWrapper);
+        return songLists;
     }
 }

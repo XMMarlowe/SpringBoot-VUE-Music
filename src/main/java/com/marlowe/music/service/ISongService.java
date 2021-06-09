@@ -25,7 +25,7 @@ public interface ISongService extends IService<Song> {
     boolean addSong(Song song);
 
     /**
-     * 更新歌曲信息，只允许修改歌词
+     * 根据主键id更新歌曲信息，只允许修改歌词
      *
      * @param song
      * @return

@@ -4,7 +4,7 @@ server:
     context-path: /
 spring:
   profiles:
-    active: prod
+    active: dev
   datasource:
     druid:
       url: jdbc:mysql://lcoalhost:3306/music?serverTimezone=Asia/Shanghai

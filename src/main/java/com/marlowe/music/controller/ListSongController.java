@@ -4,13 +4,16 @@ package com.marlowe.music.controller;
 import com.github.pagehelper.PageInfo;
 import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.ListSong;
+import com.marlowe.music.entity.Song;
 import com.marlowe.music.entity.SongList;
 import com.marlowe.music.service.impl.ListSongServiceImpl;
+import com.marlowe.music.service.impl.SongServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,8 +33,11 @@ public class ListSongController {
     @Autowired
     private ListSongServiceImpl listSongService;
 
+    @Autowired
+    private SongServiceImpl songService;
+
     /**
-     * 添加歌曲到歌单中
+     * 添加歌曲到歌单中，并更新当前歌曲pic为歌单封面
      *
      * @param listSong
      * @return
@@ -65,15 +71,15 @@ public class ListSongController {
     }
 
     /**
-     * 删除歌单里指定id的歌曲
-     *
-     * @param id
+     * 删除指定歌单id里面的指定歌曲id,并更新歌单封面
+     * @param songId
+     * @param songListId
      * @return
      */
-    @ApiOperation("更新歌单里面的歌曲信息")
-    @PostMapping("delete/{id}")
-    public Result deleteListSong(@PathVariable int id) {
-        boolean deleteListSong = listSongService.deleteListSong(id);
+    @ApiOperation("删除指定歌单id里面的指定歌曲id,并更新歌单封面")
+    @PostMapping("delete/{songId}/{songListId}")
+    public Result deleteListSongBySongIdAndSongListId(@PathVariable int songId, @PathVariable int songListId) {
+        boolean deleteListSong = listSongService.deleteListSongBySongIdAndSongListId(songId,songListId);
         if (deleteListSong) {
             return Result.ok("删除成功");
         } else {
@@ -82,41 +88,45 @@ public class ListSongController {
     }
 
 
-    /**
-     * 分页查询歌单里面的所有歌曲
-     *
-     * @param pageNo
-     * @param pageSize
-     * @return
-     */
-    @ApiOperation("分页查询歌单里面的所有歌曲")
-    @GetMapping("allListSong/{pageNo}/{pageSize}")
-    public Result<List<ListSong>> allListSong(@PathVariable int pageNo, @PathVariable int pageSize) {
-        PageInfo<ListSong> pageInfo = listSongService.allListSong(pageNo, pageSize);
-        List<ListSong> listSongs = pageInfo.getList();
-        return Result.ok(listSongs);
-    }
+//    /**
+//     * 分页查询歌单里面的所有歌曲
+//     *
+//     * @param pageNo
+//     * @param pageSize
+//     * @return
+//     */
+//    @ApiOperation("分页查询歌单里面的所有歌曲")
+//    @GetMapping("allListSong/{pageNo}/{pageSize}")
+//    public Result<List<ListSong>> allListSong(@PathVariable int pageNo, @PathVariable int pageSize) {
+//        PageInfo<ListSong> pageInfo = listSongService.allListSong(pageNo, pageSize);
+//        List<ListSong> listSongs = pageInfo.getList();
+//        return Result.ok(listSongs);
+//    }
 
 
     /**
      * 分页查询歌单表里指定歌单ID的所有歌曲
      *
-     * @param id
+     * @param songListId
      * @param pageNo
      * @param pageSize
      * @return
      */
     @ApiOperation("分页查询歌单表里指定歌单ID的所有歌曲")
-    @GetMapping("detail/{id}/{pageNo}/{pageSize}")
-    public Result<List<ListSong>> findSongsBySongListId(@PathVariable int id, @PathVariable int pageNo, @PathVariable int pageSize) {
-        PageInfo<ListSong> pageInfo = listSongService.findSongsBySongListId(id, pageNo, pageSize);
-        List<ListSong> listSongs = pageInfo.getList();
+    @GetMapping("detail/{songListId}/{pageNo}/{pageSize}")
+    public Result<List<Song>> findSongsBySongListId(@PathVariable int songListId, @PathVariable int pageNo, @PathVariable int pageSize) {
+        PageInfo<ListSong> pageInfo = listSongService.findSongsBySongListId(songListId, pageNo, pageSize);
+        List<ListSong> songIds = pageInfo.getList();
 
         // 得到歌单里面的所有歌曲id，再根据歌曲id查询歌曲信息，返回给前端
-
-        // TODO:: 完善
-        return Result.ok(listSongs);
+        List<Song> songs = new ArrayList<>();
+        for (ListSong songId : songIds) {
+            Song song = songService.findSongById(songId.getSongId());
+            songs.add(song);
+        }
+        return Result.ok(songs);
     }
+
 
 
 }

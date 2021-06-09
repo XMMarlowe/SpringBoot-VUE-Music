@@ -4,6 +4,7 @@ package com.marlowe.music.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.marlowe.music.commons.result.Result;
+import com.marlowe.music.entity.ListSong;
 import com.marlowe.music.entity.Song;
 import com.marlowe.music.entity.SongList;
 import com.marlowe.music.service.impl.ListSongServiceImpl;
@@ -28,7 +29,7 @@ import java.util.Random;
 
 /**
  * <p>
- * 歌单表 前端控制器
+ * 歌单表 前端控制器,在此类中，只要发起查询歌单请求，都需要更新歌单封面，更新逻辑：采用当前歌单的第一首歌曲作为歌单封面
  * </p>
  *
  * @author marlowe
@@ -125,49 +126,41 @@ public class SongListController {
     public Result<List<SongList>> getRandomSongList(@PathVariable int num) {
 
         List<SongList> res = new ArrayList<>();
-        //  先查询出歌单总数
-        int allSongListCount = songListService.getAllSongList();
-        // 获得随机列表
+        //  先查询出所有歌单的id
+        PageInfo<SongList> pageInfo = songListService.allSongList(1, 100000);
+        List<SongList> list = pageInfo.getList();
+
+        // 获得歌单列表大小，生成索引随机数
+        int size = list.size();
+
+        // 获得不重复随机数索引
         List<Integer> songListIdList = new ArrayList<>();
+
         for (int i = 0; i < num; i++) {
-            int nextInt = new Random().nextInt(allSongListCount);
-            if (!songListIdList.contains(nextInt)) {
-                songListIdList.add(nextInt);
-            }
+            int nextInt = new Random().nextInt(size);
+            songListIdList.add(nextInt);
         }
 
-        // 根据随机列表，返回歌单信息，包含歌单的封面，封面为具体歌单列表中的第一首歌曲
-        for (Integer songListId : songListIdList) {
-            // 通过id获得歌单信息
-            SongList songListInfo = songListService.findById(songListId);
-            // 通过歌单信息获取歌单里面的所有歌曲。直接查询歌单里面最后添加的一首歌曲，如果没有歌，则用默认封面，有歌曲，就用当前歌曲的图片
-            int lastSongIdBySongListId = listSongService.findLastSongIdBySongListId(songListInfo.getId());
-
-            // 如果歌单里面没有歌曲，就用默认的图片，有歌曲，就取出最后一首歌曲的pic作为封面
-            if (lastSongIdBySongListId != -1) {
-                String songByIdPic = songService.findSongById(lastSongIdBySongListId).getPic();
-                songListInfo.setPic(songByIdPic);
-            }
-            boolean b = songListService.updateSongListImg(songListInfo);
-            res.add(songListInfo);
+        for (int i = 0; i < songListIdList.size(); i++) {
+            res.add(list.get(songListIdList.get(i)));
         }
+
         return Result.ok(res);
     }
 
     /**
-     * 分页查询所有歌单，并且得到第一首歌的图片作为封面
+     * 分页查询所有歌单
      *
      * @param pageNo
      * @param pageSize
      * @return
      */
-    @ApiOperation(value = "分页查询所有歌单，并且得到第一首歌的图片作为封面")
+    @ApiOperation(value = "分页查询所有歌单")
     @GetMapping("allSongList/{pageNo}/{pageSize}")
     public Result<List<SongList>> allSongList(@PathVariable int pageNo, @PathVariable int pageSize) {
         PageInfo<SongList> pageInfo = songListService.allSongList(pageNo, pageSize);
         List<SongList> songLists = pageInfo.getList();
 
-        // TODO:: 完善   分页查询所有歌单，并且得到第一首歌的图片作为封面
         return Result.ok(songLists);
     }
 
@@ -201,6 +194,20 @@ public class SongListController {
         PageInfo<SongList> pageInfo = songListService.findSongListByStyle(style, pageNo, pageSize);
         List<SongList> songLists = pageInfo.getList();
         return Result.ok(songLists);
+    }
+
+    /**
+     * 根据userId查询该用户创建的所有歌单,并且以歌单里面的第一首歌曲封面作为歌单封面
+     *
+     * @param userId
+     * @return
+     */
+    @ApiOperation("根据userId查询该用户创建的所有歌单")
+    @GetMapping("detail-userId/{userId}")
+    public Result<List<SongList>> findListSongByUserId(@PathVariable int userId) {
+        List<SongList> songLists = songListService.findSongListByUserId(userId);
+        return Result.ok(songLists);
+
     }
 
 }

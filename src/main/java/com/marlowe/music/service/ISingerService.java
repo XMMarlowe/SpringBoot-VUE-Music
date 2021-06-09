@@ -44,7 +44,7 @@ public interface ISingerService extends IService<Singer> {
     int deleteSinger(String id);
 
     /**
-     * 更新歌手信息
+     * 通过主键id更新歌手信息
      *
      * @return
      */
