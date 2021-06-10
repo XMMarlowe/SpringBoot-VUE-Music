@@ -5,6 +5,8 @@ import com.marlowe.music.entity.Song;
 import com.marlowe.music.entity.WorkOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 歌词报错表 服务类
@@ -40,6 +42,15 @@ public interface IWorkOrderService extends IService<WorkOrder> {
      * @return
      */
     boolean deleteWorkOrderById(Integer id);
+
+
+    /**
+     * 批量删除工单
+     *
+     * @param ids
+     * @return
+     */
+    boolean deleteWorkOrders(List<Integer> ids);
 
 
     /**

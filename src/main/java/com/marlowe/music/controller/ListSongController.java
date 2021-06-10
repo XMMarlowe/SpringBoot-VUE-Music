@@ -88,21 +88,6 @@ public class ListSongController {
     }
 
 
-//    /**
-//     * 分页查询歌单里面的所有歌曲
-//     *
-//     * @param pageNo
-//     * @param pageSize
-//     * @return
-//     */
-//    @ApiOperation("分页查询歌单里面的所有歌曲")
-//    @GetMapping("allListSong/{pageNo}/{pageSize}")
-//    public Result<List<ListSong>> allListSong(@PathVariable int pageNo, @PathVariable int pageSize) {
-//        PageInfo<ListSong> pageInfo = listSongService.allListSong(pageNo, pageSize);
-//        List<ListSong> listSongs = pageInfo.getList();
-//        return Result.ok(listSongs);
-//    }
-
 
     /**
      * 分页查询歌单表里指定歌单ID的所有歌曲

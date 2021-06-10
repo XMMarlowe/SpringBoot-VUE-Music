@@ -82,6 +82,17 @@ public class WorkOrderServiceImpl extends ServiceImpl<WorkOrderMapper, WorkOrder
     }
 
     /**
+     * 批量删除工单
+     *
+     * @param ids
+     * @return
+     */
+    @Override
+    public boolean deleteWorkOrders(List<Integer> ids) {
+        return workOrderMapper.deleteBatchIds(ids) > 0;
+    }
+
+    /**
      * 分页查询所有工单
      *
      * @param pageNo

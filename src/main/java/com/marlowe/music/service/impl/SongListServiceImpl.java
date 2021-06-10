@@ -47,7 +47,7 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     @Override
     public boolean updateSongListMsg(SongList songList) {
         QueryWrapper<SongList> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id",songList.getId());
+        queryWrapper.eq("id", songList.getId());
         return songListMapper.update(songList, queryWrapper) > 0;
     }
 
@@ -75,6 +75,17 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     }
 
     /**
+     * 批量删除歌单
+     *
+     * @param ids
+     * @return
+     */
+    @Override
+    public boolean deleteSongLists(List<Integer> ids) {
+        return songListMapper.deleteBatchIds(ids) > 0;
+    }
+
+    /**
      * 通过id获取歌单信息
      *
      * @param id
@@ -87,15 +98,6 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
         return songList;
     }
 
-    /**
-     * 获得歌单的数量
-     *
-     * @return
-     */
-    @Override
-    public int getAllSongList() {
-        return songListMapper.selectCount(null);
-    }
 
     /**
      * 分页查询所有歌单
@@ -161,8 +163,18 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     @Override
     public List<SongList> findSongListByUserId(int userId) {
         QueryWrapper<SongList> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",userId);
+        queryWrapper.eq("user_id", userId);
         List<SongList> songLists = songListMapper.selectList(queryWrapper);
         return songLists;
+    }
+
+    /**
+     * 获得歌单的数量
+     *
+     * @return
+     */
+    @Override
+    public int songListCount() {
+        return songListMapper.selectCount(null);
     }
 }

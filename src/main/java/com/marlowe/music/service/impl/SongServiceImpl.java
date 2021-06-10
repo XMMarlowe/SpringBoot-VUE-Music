@@ -47,9 +47,24 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
     @Override
     public boolean updateSongMsg(Song song) {
         QueryWrapper<Song> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("id",song.getId());
+        queryWrapper.eq("id", song.getId());
         return songMapper.update(song, queryWrapper) > 0;
     }
+
+    /**
+     * 更新歌曲播放次数
+     *
+     * @param song
+     * @return
+     */
+    @Override
+    public boolean updateSongPlayCount(Song song) {
+        QueryWrapper<Song> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("id", song.getId());
+        song.setPlayCount(song.getPlayCount() + 1);
+        return songMapper.update(song, queryWrapper) > 0;
+    }
+
 
     /**
      * 更新歌曲图片
@@ -71,6 +86,17 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
     @Override
     public boolean deleteSong(Integer id) {
         return songMapper.deleteById(id) > 0;
+    }
+
+    /**
+     * 批量删除歌曲
+     *
+     * @param ids
+     * @return
+     */
+    @Override
+    public boolean deleteSongs(List<Integer> ids) {
+        return songMapper.deleteBatchIds(ids) > 0;
     }
 
     /**
@@ -148,9 +174,34 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
         PageHelper.startPage(pageNo, pageSize);
 
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", name);
+        queryWrapper.like("name", name);
         List<Song> songs = songMapper.selectList(queryWrapper);
         PageInfo<Song> pageInfo = new PageInfo(songs);
         return pageInfo;
+    }
+
+    /**
+     * 查询歌曲总数
+     *
+     * @return
+     */
+    @Override
+    public int songCount() {
+        return songMapper.selectCount(null);
+    }
+
+    /**
+     * 查询播放次数前n的歌曲
+     *
+     * @param count
+     * @return
+     */
+    @Override
+    public List<Song> songOrderByPlayCount(int count) {
+
+        QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("play_count").last("limit " + count);
+        List<Song> songs = songMapper.selectList(queryWrapper);
+        return songs;
     }
 }

@@ -50,20 +50,41 @@ public class SingerController {
     @ApiOperation(value = "添加歌手")
     @PostMapping("add")
     public Result addSinger(@RequestBody Singer singer) {
-        singerService.addSinger(singer);
-        return Result.ok("添加成功");
+        boolean addSinger = singerService.addSinger(singer);
+        if (addSinger) {
+            return Result.ok("添加成功");
+        } else {
+            return Result.ok("添加失败");
+        }
     }
 
     /**
-     * 删除歌手
+     * 根据id删除歌手
      *
      * @return
      */
     @ApiOperation(value = "根据id删除歌手")
     @GetMapping("delete/{id}")
     public Result deleteSinger(@PathVariable String id) {
-        int deleteSinger = singerService.deleteSinger(id);
-        if (deleteSinger > 0) {
+        boolean deleteSinger = singerService.deleteSinger(id);
+        if (deleteSinger) {
+            return Result.ok("删除成功");
+        } else {
+            return Result.ok("删除失败");
+        }
+    }
+
+    /**
+     * 批量删除歌手
+     *
+     * @param idList
+     * @return
+     */
+    @ApiOperation("批量删除歌手")
+    @PostMapping("deletes")
+    public Result deleteSingers(@RequestBody List<Integer> idList) {
+        boolean deleteSingers = singerService.deleteSingers(idList);
+        if (deleteSingers) {
             return Result.ok("删除成功");
         } else {
             return Result.ok("删除失败");
@@ -78,8 +99,8 @@ public class SingerController {
     @ApiOperation(value = "通过主键id更新歌手信息")
     @PostMapping("update")
     public Result updateSingerMsg(@RequestBody Singer singer) {
-        int update = singerService.updateSingerMsg(singer);
-        if (update > 0) {
+        boolean update = singerService.updateSingerMsg(singer);
+        if (update) {
             return Result.ok("更新成功");
         } else {
             return Result.ok("更新失败");
@@ -125,5 +146,16 @@ public class SingerController {
         PageInfo<Singer> pageInfo = singerService.allSinger(pageNo, pageSize);
         List<Singer> singers = pageInfo.getList();
         return Result.ok(singers);
+    }
+
+    /**
+     * 获得歌手总数
+     * @return
+     */
+    @ApiOperation(value = "获得歌手总数")
+    @GetMapping("count")
+    public Result singerCount() {
+        int singerCount = singerService.singerCount();
+        return Result.ok(singerCount);
     }
 }

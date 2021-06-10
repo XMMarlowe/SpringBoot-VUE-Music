@@ -33,22 +33,29 @@ public interface ISingerService extends IService<Singer> {
      *
      * @return
      */
-    Singer addSinger(Singer singer);
+    boolean addSinger(Singer singer);
 
 
     /**
-     * 删除歌手
+     * 通过id删除歌手
      *
      * @return
      */
-    int deleteSinger(String id);
+    boolean deleteSinger(String id);
+
+    /**
+     * 批量删除歌手
+     * @param ids
+     * @return
+     */
+    boolean deleteSingers(List<Integer> ids);
 
     /**
      * 通过主键id更新歌手信息
      *
      * @return
      */
-    int updateSingerMsg(Singer singer);
+    boolean updateSingerMsg(Singer singer);
 
 
     /**
@@ -73,5 +80,11 @@ public interface ISingerService extends IService<Singer> {
      * @return
      */
     PageInfo<Singer> findSingerBySex(int sex,int pageNo,int pageSize);
+
+    /**
+     * 获得歌手总数量
+     * @return
+     */
+    int singerCount();
 
 }

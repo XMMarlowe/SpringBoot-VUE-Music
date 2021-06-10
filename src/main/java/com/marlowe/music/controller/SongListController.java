@@ -121,6 +121,23 @@ public class SongListController {
         }
     }
 
+    /**
+     * 批量删除歌单
+     *
+     * @param idList
+     * @return
+     */
+    @ApiOperation(value = "批量删除歌单")
+    @GetMapping("deletes")
+    public Result deleteSongLists(@RequestBody List<Integer> idList) {
+        boolean deleteSongLists = songListService.deleteSongLists(idList);
+        if (deleteSongLists) {
+            return Result.ok("删除成功");
+        } else {
+            return Result.ok("删除失败");
+        }
+    }
+
     @ApiOperation(value = "随机获得n个歌单")
     @GetMapping("getRandomSongList/{num}")
     public Result<List<SongList>> getRandomSongList(@PathVariable int num) {
@@ -133,12 +150,18 @@ public class SongListController {
         // 获得歌单列表大小，生成索引随机数
         int size = list.size();
 
+        if (size < num) {
+            return Result.ok("当前歌单数不足，请调小请求个数");
+        }
+
         // 获得不重复随机数索引
         List<Integer> songListIdList = new ArrayList<>();
 
         for (int i = 0; i < num; i++) {
             int nextInt = new Random().nextInt(size);
-            songListIdList.add(nextInt);
+            if (!songListIdList.contains(nextInt)) {
+                songListIdList.add(nextInt);
+            }
         }
 
         for (int i = 0; i < songListIdList.size(); i++) {
@@ -208,6 +231,18 @@ public class SongListController {
         List<SongList> songLists = songListService.findSongListByUserId(userId);
         return Result.ok(songLists);
 
+    }
+
+    /**
+     * 获得歌单的数量
+     *
+     * @return
+     */
+    @ApiOperation("获得歌单的数量")
+    @GetMapping("count")
+    public Result songListCount() {
+        int songListCount = songListService.songListCount();
+        return Result.ok(songListCount);
     }
 
 }

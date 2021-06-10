@@ -32,6 +32,14 @@ public interface ISongService extends IService<Song> {
      */
     boolean updateSongMsg(Song song);
 
+    /**
+     * 更新歌曲播放次数
+     *
+     * @param song
+     * @return
+     */
+    boolean updateSongPlayCount(Song song);
+
 
     /**
      * 更新歌曲图片
@@ -42,12 +50,21 @@ public interface ISongService extends IService<Song> {
     boolean updateSongPic(Song song);
 
     /**
-     * 删除歌曲
+     * 根据id删除歌曲
      *
      * @param id
      * @return
      */
     boolean deleteSong(Integer id);
+
+    /**
+     * 批量删除歌曲
+     *
+     * @param ids
+     * @return
+     */
+    boolean deleteSongs(List<Integer> ids);
+
 
     /**
      * 查询所有歌曲
@@ -88,4 +105,20 @@ public interface ISongService extends IService<Song> {
      * @return
      */
     PageInfo<Song> findSongByName(String name, int pageNo, int pageSize);
+
+    /**
+     * 查询歌曲总数
+     *
+     * @return
+     */
+    int songCount();
+
+
+    /**
+     * 查询播放次数前n的歌曲
+     * @param count
+     * @return
+     */
+    List<Song> songOrderByPlayCount(int count);
+
 }

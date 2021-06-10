@@ -70,16 +70,33 @@ public class WorkOrderController {
     }
 
     /**
-     * 删除工单
+     * 根据id删除工单
      *
      * @param id
      * @return
      */
-    @ApiOperation(value = "删除工单")
+    @ApiOperation(value = "根据id删除工单")
     @PostMapping("delete/{id}")
     public Result deleteWorkOrderById(@PathVariable int id) {
         boolean deleteWorkOrderById = workOrderService.deleteWorkOrderById(id);
         if (deleteWorkOrderById) {
+            return Result.ok("删除成功");
+        } else {
+            return Result.ok("删除失败");
+        }
+    }
+
+    /**
+     * 批量删除工单
+     *
+     * @param ids
+     * @return
+     */
+    @ApiOperation(value = "批量删除工单")
+    @PostMapping("deletes")
+    public Result deleteWorkOrders(@RequestBody List<Integer> ids) {
+        boolean deleteWorkOrders = workOrderService.deleteWorkOrders(ids);
+        if (deleteWorkOrders) {
             return Result.ok("删除成功");
         } else {
             return Result.ok("删除失败");

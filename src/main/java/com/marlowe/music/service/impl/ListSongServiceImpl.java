@@ -47,6 +47,7 @@ public class ListSongServiceImpl extends ServiceImpl<ListSongMapper, ListSong> i
     public boolean addListSong(ListSong listSong) {
 
         int insert = listSongMapper.insert(listSong);
+
         // 通过 songListId 查询歌单信息
         Integer songListId = listSong.getSongListId();
         SongList songList = songListMapper.selectById(songListId);

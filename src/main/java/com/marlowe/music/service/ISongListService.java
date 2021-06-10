@@ -43,12 +43,19 @@ public interface ISongListService extends IService<SongList> {
     boolean updateSongListImg(SongList songList);
 
     /**
-     * 删除歌单
+     * 根据主键id删除歌单
      *
      * @param id
      * @return
      */
     boolean deleteSongList(Integer id);
+
+    /**
+     * 批量删除歌单
+     * @param ids
+     * @return
+     */
+    boolean deleteSongLists(List<Integer> ids);
 
     /**
      * 通过id获取歌单信息
@@ -57,11 +64,7 @@ public interface ISongListService extends IService<SongList> {
      */
     SongList findById(int id);
 
-    /**
-     * 获得歌单的数量
-     * @return
-     */
-    int getAllSongList();
+
 
     /**
      * 分页查询所有歌单
@@ -98,6 +101,12 @@ public interface ISongListService extends IService<SongList> {
      * @return
      */
     List<SongList> findSongListByUserId(int userId);
+
+    /**
+     * 获得歌单的数量
+     * @return
+     */
+    int songListCount();
 
 
 }

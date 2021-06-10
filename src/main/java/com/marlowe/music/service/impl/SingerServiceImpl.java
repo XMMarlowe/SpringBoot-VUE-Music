@@ -40,20 +40,30 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
 
 
     @Override
-    public Singer addSinger(Singer singer) {
-        singerMapper.insert(singer);
-        return singer;
+    public boolean addSinger(Singer singer) {
+        return singerMapper.insert(singer) > 0;
+
     }
 
     /**
-     * 删除歌手
+     * 通过id删除歌手
      *
      * @return
      */
     @Override
-    public int deleteSinger(String id) {
-        int delete = singerMapper.deleteById(id);
-        return delete;
+    public boolean deleteSinger(String id) {
+        return singerMapper.deleteById(id) > 0;
+    }
+
+    /**
+     * 批量删除歌手
+     *
+     * @param ids
+     * @return
+     */
+    @Override
+    public boolean deleteSingers(List<Integer> ids) {
+        return singerMapper.deleteBatchIds(ids) > 0;
     }
 
     /**
@@ -62,8 +72,8 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
      * @return
      */
     @Override
-    public int updateSingerMsg(Singer singer) {
-        return singerMapper.updateById(singer);
+    public boolean updateSingerMsg(Singer singer) {
+        return singerMapper.updateById(singer) > 0;
     }
 
     /**
@@ -106,5 +116,15 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
         List<Singer> singers = singerMapper.selectList(queryWrapper);
         PageInfo<Singer> pageInfo = new PageInfo(singers);
         return pageInfo;
+    }
+
+    /**
+     * 获得歌手总数量
+     *
+     * @return
+     */
+    @Override
+    public int singerCount() {
+        return singerMapper.selectCount(null);
     }
 }

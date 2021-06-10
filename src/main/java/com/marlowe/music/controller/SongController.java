@@ -167,8 +167,24 @@ public class SongController {
     @GetMapping("delete/{id}")
     public Result deleteSong(@PathVariable int id) {
         boolean deleteSong = songService.deleteSong(id);
-
         if (deleteSong) {
+            return Result.ok("删除成功");
+        } else {
+            return Result.ok("删除失败");
+        }
+    }
+
+    /**
+     * 批量删除歌曲
+     *
+     * @param idList
+     * @return
+     */
+    @ApiOperation(value = "批量删除歌曲")
+    @GetMapping("deletes")
+    public Result deleteSongs(@RequestBody List<Integer> idList) {
+        boolean deleteSongs = songService.deleteSongs(idList);
+        if (deleteSongs) {
             return Result.ok("删除成功");
         } else {
             return Result.ok("删除失败");
@@ -191,5 +207,45 @@ public class SongController {
         }
     }
 
+    /**
+     * 获得歌曲总数
+     *
+     * @return
+     */
+    @ApiOperation(value = "获得歌曲总数")
+    @PostMapping("count")
+    public Result songCount() {
+        int songCount = songService.songCount();
+        return Result.ok(songCount);
+    }
+
+    /**
+     * 播放并更新播放次数  次数+1
+     *
+     * @param song
+     * @return
+     */
+    @ApiOperation(value = "播放并更新播放次数 次数+1")
+    @PostMapping("play")
+    public Result playAndUpdatePlayCount(@RequestBody Song song) {
+        // 更新播放次数
+        boolean updateSongPlayCount = songService.updateSongPlayCount(song);
+        // 查询更新后的数据并返回
+        Song songById = songService.findSongById(song.getId());
+        return Result.ok(songById);
+    }
+
+    /**
+     * 查询播放次数前n的歌曲
+     *
+     * @param count
+     * @return
+     */
+    @ApiOperation(value = "查询播放次数前n的歌曲")
+    @GetMapping("order/{count}")
+    public Result<List<Song>> songOrderByPlayCount(@PathVariable int count) {
+        List<Song> songs = songService.songOrderByPlayCount(count);
+        return Result.ok(songs);
+    }
 
 }
