@@ -141,4 +141,18 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
         Integer count = singerMapper.selectCount(queryWrapper);
         return count;
     }
+
+    /**
+     * 根据歌手地区获得歌曲数量
+     *
+     * @param location
+     * @return
+     */
+    @Override
+    public int singerCountOfLocation(String location) {
+        QueryWrapper<Singer> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("location", location);
+        Integer count = singerMapper.selectCount(queryWrapper);
+        return count;
+    }
 }

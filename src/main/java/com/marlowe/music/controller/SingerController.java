@@ -19,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * <p>
@@ -152,6 +154,45 @@ public class SingerController {
     }
 
     /**
+     * 随机获得n个歌手
+     * @param num
+     * @return
+     */
+    @ApiOperation(value = "随机获得n个歌手")
+    @GetMapping("getRandomSinger/{num}")
+    public Result<List<Singer>> getRandomSinger(@PathVariable int num) {
+        List<Singer> res = new ArrayList();
+
+        PageInfo<Singer> pageInfo = singerService.allSinger(1, 100000);
+        List<Singer> list = pageInfo.getList();
+
+        // 获得歌单列表大小，生成索引随机数
+        int size = list.size();
+
+        if (size < num) {
+            return Result.ok("当前歌手数不足，请调小请求个数");
+        }
+
+        // 获得不重复随机数索引
+        List<Integer> songListIdList = new ArrayList<>();
+
+        for (int i = 0; i < num; i++) {
+            int nextInt = new Random().nextInt(size);
+            if (!songListIdList.contains(nextInt)) {
+                songListIdList.add(nextInt);
+            } else {
+                i--;
+            }
+        }
+
+        for (int i = 0; i < songListIdList.size(); i++) {
+            res.add(list.get(songListIdList.get(i)));
+        }
+
+        return Result.ok(res);
+    }
+
+    /**
      * 获得歌手总数
      *
      * @return
@@ -181,6 +222,34 @@ public class SingerController {
         // 查询出组合歌手个数
         int countOfSex2 = singerService.singerCountOfSex(2);
         jsonObject.put("组合", countOfSex2);
+        return Result.ok(jsonObject);
+    }
+
+    /**
+     * 根据歌手地区获得歌曲数量
+     *
+     * @return
+     */
+    @ApiOperation(value = "根据歌手地区获得歌曲数量")
+    @GetMapping("detail/location")
+    public Result singerCountOfLocation() {
+        JSONObject jsonObject = new JSONObject();
+
+        // 查询出华语歌手个数
+        int countOfLocation1 = singerService.singerCountOfLocation("华语");
+        jsonObject.put("华语", countOfLocation1);
+        // 查询出欧美歌手个数
+        int countOfLocation2 = singerService.singerCountOfLocation("欧美");
+        jsonObject.put("欧美", countOfLocation2);
+        // 查询出日本歌手个数
+        int countOfLocation3 = singerService.singerCountOfLocation("日本");
+        jsonObject.put("日本", countOfLocation3);
+        // 查询出韩国歌手个数
+        int countOfLocation4 = singerService.singerCountOfLocation("韩国");
+        jsonObject.put("韩国", countOfLocation4);
+        // 查询出其他歌手个数
+        int countOfLocation5 = singerService.singerCountOfLocation("其他");
+        jsonObject.put("其他", countOfLocation5);
         return Result.ok(jsonObject);
     }
 }
