@@ -94,4 +94,12 @@ public interface ISingerService extends IService<Singer> {
      */
     int singerCountOfSex(int sex);
 
+
+    /**
+     * 根据歌手地区获得歌曲数量
+     * @param location
+     * @return
+     */
+    int singerCountOfLocation(String location);
+
 }
