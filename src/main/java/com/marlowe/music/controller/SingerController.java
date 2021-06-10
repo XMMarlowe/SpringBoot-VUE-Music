@@ -1,7 +1,10 @@
 package com.marlowe.music.controller;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.JsonObject;
 import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.Singer;
 import com.marlowe.music.service.ISingerService;
@@ -150,6 +153,7 @@ public class SingerController {
 
     /**
      * 获得歌手总数
+     *
      * @return
      */
     @ApiOperation(value = "获得歌手总数")
@@ -157,5 +161,26 @@ public class SingerController {
     public Result singerCount() {
         int singerCount = singerService.singerCount();
         return Result.ok(singerCount);
+    }
+
+    /**
+     * 根据歌手性别统计
+     *
+     * @return
+     */
+    @ApiOperation(value = "根据歌手性别统计")
+    @GetMapping("detail/sex")
+    public Result singerCountOfSex() {
+        JSONObject jsonObject = new JSONObject();
+        // 查询出男歌手个数
+        int countOfSex1 = singerService.singerCountOfSex(1);
+        jsonObject.put("男", countOfSex1);
+        // 查询出女歌手个数
+        int countOfSex0 = singerService.singerCountOfSex(0);
+        jsonObject.put("女", countOfSex0);
+        // 查询出组合歌手个数
+        int countOfSex2 = singerService.singerCountOfSex(2);
+        jsonObject.put("组合", countOfSex2);
+        return Result.ok(jsonObject);
     }
 }

@@ -161,6 +161,8 @@ public class SongListController {
             int nextInt = new Random().nextInt(size);
             if (!songListIdList.contains(nextInt)) {
                 songListIdList.add(nextInt);
+            }else{
+                i--;
             }
         }
 

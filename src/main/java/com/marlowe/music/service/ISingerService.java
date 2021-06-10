@@ -87,4 +87,11 @@ public interface ISingerService extends IService<Singer> {
      */
     int singerCount();
 
+    /**
+     * 根据性别获得歌曲数量
+     * @param sex
+     * @return
+     */
+    int singerCountOfSex(int sex);
+
 }

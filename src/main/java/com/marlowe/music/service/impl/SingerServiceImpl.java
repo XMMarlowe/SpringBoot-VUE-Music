@@ -127,4 +127,18 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
     public int singerCount() {
         return singerMapper.selectCount(null);
     }
+
+    /**
+     * 根据性别获得歌曲数量
+     *
+     * @param sex
+     * @return
+     */
+    @Override
+    public int singerCountOfSex(int sex) {
+        QueryWrapper<Singer> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("sex", sex);
+        Integer count = singerMapper.selectCount(queryWrapper);
+        return count;
+    }
 }
