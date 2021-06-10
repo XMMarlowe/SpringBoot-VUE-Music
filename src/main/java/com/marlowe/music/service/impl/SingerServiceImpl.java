@@ -38,6 +38,20 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
         return pageInfo;
     }
 
+    /**
+     * 根据歌手id获得歌手信息
+     *
+     * @param singerId
+     * @return
+     */
+    @Override
+    public Singer findBySingerId(int singerId) {
+        QueryWrapper<Singer> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("singer_id", singerId);
+        Singer singer = singerMapper.selectOne(queryWrapper);
+        return singer;
+    }
+
 
     @Override
     public boolean addSinger(Singer singer) {

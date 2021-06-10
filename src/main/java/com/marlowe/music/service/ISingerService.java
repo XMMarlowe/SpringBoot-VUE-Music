@@ -29,6 +29,13 @@ public interface ISingerService extends IService<Singer> {
     PageInfo<Singer> allSinger(int pageNo,int pageSize);
 
     /**
+     * 根据歌手id获得歌手信息
+     * @param singerId
+     * @return
+     */
+    Singer findBySingerId(int singerId);
+
+    /**
      * 添加歌手
      *
      * @return

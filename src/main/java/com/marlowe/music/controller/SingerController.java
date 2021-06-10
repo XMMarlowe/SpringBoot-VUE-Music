@@ -48,6 +48,19 @@ public class SingerController {
     }
 
     /**
+     * 根据歌手id获得歌手信息
+     *
+     * @param id
+     * @return
+     */
+    @ApiOperation("根据歌手id获得歌手信息")
+    @GetMapping("{id}")
+    public Result findBySingerId(@PathVariable int id) {
+        Singer singer = singerService.findBySingerId(id);
+        return Result.ok(singer);
+    }
+
+    /**
      * 添加歌手
      *
      * @return
@@ -155,6 +168,7 @@ public class SingerController {
 
     /**
      * 随机获得n个歌手
+     *
      * @param num
      * @return
      */
