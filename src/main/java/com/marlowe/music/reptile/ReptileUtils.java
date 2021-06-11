@@ -1,5 +1,7 @@
 package com.marlowe.music.reptile;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -139,9 +141,19 @@ public class ReptileUtils {
 
                     // 解析获取歌曲对象
                     Elements songElements = doc2.select("ul.f-hide li");
-//                    System.out.println("----------------------------");
-//                    System.out.println(songElements);
-//                    System.out.println("----------------------------");
+
+
+                    // 获取歌曲时长秒数列表
+                    List<String> songTimesList = new ArrayList();
+                    String songTime = doc2.select("#song-list-pre-data").text();
+
+                    // 将字符串转换为json数组
+                    JSONArray jarr = JSONArray.parseArray(songTime);
+                    for (Iterator iterator = jarr.iterator(); iterator.hasNext(); ) {
+                        JSONObject job = (JSONObject) iterator.next();
+                        String time = job.get("duration").toString();
+                        songTimesList.add(time);
+                    }
 
 
                     // 进入歌手页面获得歌手的图片
@@ -179,12 +191,42 @@ public class ReptileUtils {
                     int insert = singerMapper.insert(singer);
 //                    System.out.println(insert);
 
+                    // 获得歌曲时长的下标
+                    int index = 0;
+
                     // 获取当前歌手下所有热门歌曲
                     for (Element el : songElements) {
                         String songId = el.getElementsByTag("a").attr("href").replaceAll("[^0-9]", "");
                         String title = el.text();
+
+                        int minutes = 0;
+                        int seconds = 0;
+                        int times = 0;
+                        if (index < songTimesList.size()) {
+                            times = Integer.parseInt(songTimesList.get(index)) / 1000;
+                            minutes = times / 60;
+                            seconds = times % 60;
+                            index++;
+                        }
+
+                        StringBuilder stringBuilder = new StringBuilder();
+                        if (minutes == 0) {
+                            stringBuilder.append("00");
+                        } else {
+                            stringBuilder.append(minutes);
+                        }
+                        stringBuilder.append(":");
+                        if (seconds < 10) {
+                            stringBuilder.append("0");
+                        }
+                        stringBuilder.append(seconds);
+                        String realSongTime = stringBuilder.toString();
+
                         System.out.println("歌曲id：" + songId);
                         System.out.println("歌曲名：" + title);
+                        System.out.println("----------------");
+                        System.out.println("秒数：" + times);
+                        System.out.println("歌曲时长：" + realSongTime);
 
                         // 歌曲真实Url
                         String songRealUrl = "http://music.163.com/song/media/outer/url?id=" + songId;
@@ -232,6 +274,7 @@ public class ReptileUtils {
 
                         Document doc5 = null;
                         String songPic = "";
+                        String albumName = "";
 
                         try {
                             String res5 = Jsoup.connect(songPicUrl)
@@ -244,6 +287,8 @@ public class ReptileUtils {
 
                             songPic = doc5.select(".u-cover-6").select("img").attr("data-src");
 
+                            albumName = doc5.select("p.des").eq(1).select("a").text();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -255,7 +300,9 @@ public class ReptileUtils {
                                 .setLyric(lyric)
                                 .setUrl(songRealUrl)
                                 .setPic(songPic)
+                                .setAlbumName(albumName)
                                 .setName(title)
+                                .setDuration(realSongTime)
                                 .setSingerName(singerName)
                                 .setIsDownload(0);
                         // 将歌曲信息插入数据库

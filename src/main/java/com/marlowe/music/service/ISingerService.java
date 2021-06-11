@@ -26,10 +26,11 @@ public interface ISingerService extends IService<Singer> {
      *
      * @return
      */
-    PageInfo<Singer> allSinger(int pageNo,int pageSize);
+    PageInfo<Singer> allSinger(int pageNo, int pageSize);
 
     /**
      * 根据歌手id获得歌手信息
+     *
      * @param singerId
      * @return
      */
@@ -42,6 +43,20 @@ public interface ISingerService extends IService<Singer> {
      */
     boolean addSinger(Singer singer);
 
+    /**
+     * 搜索框根据歌手名字模糊搜索
+     *
+     * @param name
+     * @return
+     */
+    List<Singer> findByNameLike(String name);
+
+//    /**
+//     * 根据不同条件查询歌手
+//     * @param keyWord
+//     * @return
+//     */
+//     List<Singer> findByCondition(String keyWord);
 
     /**
      * 通过id删除歌手
@@ -52,6 +67,7 @@ public interface ISingerService extends IService<Singer> {
 
     /**
      * 批量删除歌手
+     *
      * @param ids
      * @return
      */
@@ -78,7 +94,7 @@ public interface ISingerService extends IService<Singer> {
      *
      * @return
      */
-    PageInfo<Singer> findSingerByName(String name,int pageNo,int pageSize);
+    PageInfo<Singer> findSingerByName(String name, int pageNo, int pageSize);
 
 
     /**
@@ -86,16 +102,18 @@ public interface ISingerService extends IService<Singer> {
      *
      * @return
      */
-    PageInfo<Singer> findSingerBySex(int sex,int pageNo,int pageSize);
+    PageInfo<Singer> findSingerBySex(int sex, int pageNo, int pageSize);
 
     /**
      * 获得歌手总数量
+     *
      * @return
      */
     int singerCount();
 
     /**
      * 根据性别获得歌曲数量
+     *
      * @param sex
      * @return
      */
@@ -104,6 +122,7 @@ public interface ISingerService extends IService<Singer> {
 
     /**
      * 根据歌手地区获得歌曲数量
+     *
      * @param location
      * @return
      */

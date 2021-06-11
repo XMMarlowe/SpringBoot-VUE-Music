@@ -1,9 +1,13 @@
 package com.marlowe.music.controller;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.marlowe.music.commons.result.Result;
+import com.marlowe.music.entity.Singer;
 import com.marlowe.music.entity.Song;
+import com.marlowe.music.service.impl.SingerServiceImpl;
 import com.marlowe.music.service.impl.SongServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,6 +43,9 @@ public class SongController {
 
     @Autowired
     private SongServiceImpl songService;
+
+    @Autowired
+    private SingerServiceImpl singerService;
 
 
     @Bean
@@ -233,6 +240,24 @@ public class SongController {
         // 查询更新后的数据并返回
         Song songById = songService.findSongById(song.getId());
         return Result.ok(songById);
+    }
+
+
+    /**
+     * 搜索框根据歌曲名字模糊搜索
+     *
+     * @param keyWord
+     * @return
+     */
+    @ApiOperation(value = "搜索框根据歌曲名字模糊搜索")
+    @PostMapping("search/{keyWord}")
+    public Result<JSONObject> searchSuggestion(@PathVariable String keyWord) {
+        JSONObject jsonObject = new JSONObject();
+        List<Song> byNameLike = songService.findByNameLike(keyWord);
+        List<Singer> byNameLike1 = singerService.findByNameLike(keyWord);
+        jsonObject.put("songRes", byNameLike);
+        jsonObject.put("singerRes", byNameLike1);
+        return Result.ok(jsonObject);
     }
 
     /**

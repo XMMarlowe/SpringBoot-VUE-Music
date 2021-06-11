@@ -66,6 +66,16 @@ public class Song implements Serializable {
     private String name;
 
     /**
+     * 歌曲专辑名
+     */
+    private String albumName;
+
+    /**
+     * 歌曲时长
+     */
+    private String duration;
+
+    /**
      * 歌手名
      */
     private String singerName;

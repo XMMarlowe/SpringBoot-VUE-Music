@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -147,6 +148,21 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
         List<Song> songs = songMapper.selectList(queryWrapper);
         PageInfo<Song> pageInfo = new PageInfo(songs);
         return pageInfo;
+    }
+
+    /**
+     * 搜索框根据歌曲名字模糊搜索
+     *
+     * @param name
+     * @return
+     */
+    @Override
+    public List<Song> findByNameLike(String name) {
+
+        QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name", name);
+        List<Song> songs = songMapper.selectList(queryWrapper);
+        return songs;
     }
 
     /**

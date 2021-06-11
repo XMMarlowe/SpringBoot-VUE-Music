@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,20 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
     public boolean addSinger(Singer singer) {
         return singerMapper.insert(singer) > 0;
 
+    }
+
+    /**
+     * 搜索框根据歌手名字模糊搜索
+     *
+     * @param name
+     * @return
+     */
+    @Override
+    public List<Singer> findByNameLike(String name) {
+        QueryWrapper<Singer> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name", name);
+        List<Singer> singers = singerMapper.selectList(queryWrapper);
+        return singers;
     }
 
     /**
@@ -115,6 +130,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
         PageInfo<Singer> pageInfo = new PageInfo(singers);
         return pageInfo;
     }
+
 
     /**
      * 根据性别查找歌手

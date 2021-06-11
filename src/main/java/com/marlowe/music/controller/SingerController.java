@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.gson.JsonObject;
 import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.Singer;
+import com.marlowe.music.entity.Song;
 import com.marlowe.music.service.ISingerService;
 import com.marlowe.music.service.impl.SingerServiceImpl;
 import io.swagger.annotations.Api;
@@ -165,6 +166,21 @@ public class SingerController {
         List<Singer> singers = pageInfo.getList();
         return Result.ok(singers);
     }
+
+
+    /**
+     * 搜索框根据歌手名字模糊搜索
+     *
+     * @param keyWord
+     * @return
+     */
+    @ApiOperation(value = "搜索框根据歌手名字模糊搜索")
+    @PostMapping("search/{keyWord}")
+    public Result<List<Singer>> searchSuggestion(@PathVariable String keyWord) {
+        List<Singer> byNameLike = singerService.findByNameLike(keyWord);
+        return Result.ok(byNameLike);
+    }
+
 
     /**
      * 随机获得n个歌手

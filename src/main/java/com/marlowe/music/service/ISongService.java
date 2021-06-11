@@ -90,6 +90,14 @@ public interface ISongService extends IService<Song> {
     PageInfo<Song> findSongBySingerName(String name, int pageNo, int pageSize);
 
     /**
+     * 搜索框根据歌曲名字模糊搜索
+     *
+     * @param name
+     * @return
+     */
+    List<Song> findByNameLike(String name);
+
+    /**
      * 根据id查找歌曲
      *
      * @param id
@@ -116,6 +124,7 @@ public interface ISongService extends IService<Song> {
 
     /**
      * 查询播放次数前n的歌曲
+     *
      * @param count
      * @return
      */
