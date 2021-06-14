@@ -173,9 +173,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
      */
     @Override
     public Song findSongById(Integer id) {
-        QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("song_id", id);
-        return songMapper.selectOne(queryWrapper);
+        return songMapper.selectById(id);
     }
 
     /**

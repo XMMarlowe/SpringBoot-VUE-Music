@@ -304,7 +304,9 @@ public class ReptileUtils {
                                 .setName(title)
                                 .setDuration(realSongTime)
                                 .setSingerName(singerName)
-                                .setIsDownload(0);
+                                .setIsDownload(0)
+                                .setPlayCount(0);
+
                         // 将歌曲信息插入数据库
                         int insert1 = songMapper.insert(song);
 //                        System.out.println(insert1);

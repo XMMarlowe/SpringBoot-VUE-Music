@@ -121,7 +121,7 @@ public interface ISingerService extends IService<Singer> {
 
 
     /**
-     * 根据歌手地区获得歌曲数量
+     * 根据歌手地区获得歌手数量
      *
      * @param location
      * @return

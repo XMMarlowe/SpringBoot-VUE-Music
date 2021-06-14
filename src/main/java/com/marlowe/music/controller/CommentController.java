@@ -4,6 +4,7 @@ package com.marlowe.music.controller;
 import com.github.pagehelper.PageInfo;
 import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.Comment;
+import com.marlowe.music.service.ICommentService;
 import com.marlowe.music.service.impl.CommentServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +27,7 @@ import java.util.List;
 public class CommentController {
 
     @Autowired
-    private CommentServiceImpl commentService;
+    private ICommentService commentService;
 
     /**
      * 添加评论

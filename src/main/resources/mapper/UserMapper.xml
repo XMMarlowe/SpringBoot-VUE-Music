@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marlowe.music.mapper.UserMapper">
+
+
+    <resultMap id="userMap" type="com.marlowe.music.entity.User">
+        <id column="uid" property="id"/>
+        <result column="username" property="username"/>
+        <!--角色信息-->
+        <collection property="roles" javaType="list" ofType="com.marlowe.music.entity.Role">
+            <id column="uid" property="id"/>
+            <result column="rname" property="name"/>
+        </collection>
+    </resultMap>
+
+    <select id="findRolesByUserName" parameterType="string" resultMap="userMap">
+        SELECT u.id uid,u.username,r.id,r.NAME rname
+        FROM user u
+        LEFT JOIN user_role ur
+        ON u.id = ur.user_id
+        LEFT JOIN role r
+        ON ur.role_id = r.id
+        WHERE
+        u.username = #{username}
+    </select>
+    <select id="findPermsByRoleId" parameterType="int" resultType="com.marlowe.music.entity.Permission">
+        select p.id,p.name,p.url,r.name from role r
+        left join role_permission rp
+        on r.id = rp.role_id
+        left join permission p
+        on rp.permission_id = p.id
+        where r.id = #{id}
+    </select>
+    <select id="findByUserName" resultType="com.marlowe.music.entity.User">
+        select *
+        from
+        user where
+        username = #{username}
+    </select>
+    <select id="findUserById" resultType="com.marlowe.music.entity.User">
+        select * from user where id	= #{id}
+    </select>
+</mapper>

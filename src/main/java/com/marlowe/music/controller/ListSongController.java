@@ -6,6 +6,8 @@ import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.ListSong;
 import com.marlowe.music.entity.Song;
 import com.marlowe.music.entity.SongList;
+import com.marlowe.music.service.IListSongService;
+import com.marlowe.music.service.ISongService;
 import com.marlowe.music.service.impl.ListSongServiceImpl;
 import com.marlowe.music.service.impl.SongServiceImpl;
 import io.swagger.annotations.Api;
@@ -31,10 +33,10 @@ public class ListSongController {
 
 
     @Autowired
-    private ListSongServiceImpl listSongService;
+    private IListSongService listSongService;
 
     @Autowired
-    private SongServiceImpl songService;
+    private ISongService songService;
 
     /**
      * 添加歌曲到歌单中，并更新当前歌曲pic为歌单封面

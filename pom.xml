@@ -56,6 +56,21 @@
         </dependency>
 
 
+        <!--jwt-->
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+
+        <!--shiro-->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring-boot-starter</artifactId>
+            <version>1.5.3</version>
+        </dependency>
+
         <!--swagger在线文档-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -73,6 +88,12 @@
             <version>portable-1.1.5</version>
         </dependency>
 
+        <!--hutool-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.1.0</version>
+        </dependency>
         <!--mybatis-plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -85,6 +106,7 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.4.1</version>
         </dependency>
+
 
         <!--MyBatis 分页插件: MyBatis PageHelper-->
         <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper -->

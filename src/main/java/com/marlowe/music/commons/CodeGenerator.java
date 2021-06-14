@@ -48,7 +48,8 @@ public class CodeGenerator {
         gc.setOutputDir(projectPath + "/src/main/java"); //生成文件输出目录
         gc.setAuthor("marlowe");
         gc.setOpen(false);
-        // gc.setSwagger2(true); 实体属性 Swagger2 注解
+        //实体属性 Swagger2 注解
+        gc.setSwagger2(true);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -75,7 +76,7 @@ public class CodeGenerator {
                 // to do nothing
             }
         };
-         //如果模板引擎是 freemarker
+        //如果模板引擎是 freemarker
         String templatePath = "/templates/mapper.xml.ftl";
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
@@ -95,7 +96,7 @@ public class CodeGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);//表名生成策略
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);//实体字段生成策略
-        strategy.setInclude(scanner("表名").split(",")); //需要生成的表
+        strategy.setInclude(scanner("表名,多个英文逗号分割").split(",")); //需要生成的表
         //strategy.setSuperEntityClass("com.baomidou.ant.common.BaseEntity");
         strategy.setEntityLombokModel(true);//使用lombook
         strategy.setRestControllerStyle(true);

@@ -12,6 +12,8 @@ import com.marlowe.music.service.ISingerService;
 import com.marlowe.music.service.impl.SingerServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +40,7 @@ import java.util.Random;
 public class SingerController {
 
     @Autowired
-    private SingerServiceImpl singerService;
+    private ISingerService singerService;
 
     @Configuration
     public class MyPicConfig implements WebMvcConfigurer {
@@ -68,6 +70,7 @@ public class SingerController {
      */
     @ApiOperation(value = "添加歌手")
     @PostMapping("add")
+    @RequiresRoles(value = {"root", "admin"}, logical = Logical.OR)
     public Result addSinger(@RequestBody Singer singer) {
         boolean addSinger = singerService.addSinger(singer);
         if (addSinger) {
@@ -84,6 +87,7 @@ public class SingerController {
      */
     @ApiOperation(value = "根据id删除歌手")
     @GetMapping("delete/{id}")
+    @RequiresRoles("root")
     public Result deleteSinger(@PathVariable String id) {
         boolean deleteSinger = singerService.deleteSinger(id);
         if (deleteSinger) {
@@ -101,6 +105,7 @@ public class SingerController {
      */
     @ApiOperation("批量删除歌手")
     @PostMapping("deletes")
+    @RequiresRoles("root")
     public Result deleteSingers(@RequestBody List<Integer> idList) {
         boolean deleteSingers = singerService.deleteSingers(idList);
         if (deleteSingers) {
@@ -117,6 +122,7 @@ public class SingerController {
      */
     @ApiOperation(value = "通过主键id更新歌手信息")
     @PostMapping("update")
+    @RequiresRoles(value = {"root", "admin"}, logical = Logical.OR)
     public Result updateSingerMsg(@RequestBody Singer singer) {
         boolean update = singerService.updateSingerMsg(singer);
         if (update) {
@@ -256,11 +262,11 @@ public class SingerController {
     }
 
     /**
-     * 根据歌手地区获得歌曲数量
+     * 根据歌手地区获得歌手数量
      *
      * @return
      */
-    @ApiOperation(value = "根据歌手地区获得歌曲数量")
+    @ApiOperation(value = "根据歌手地区获得歌手数量")
     @GetMapping("detail/location")
     public Result singerCountOfLocation() {
         JSONObject jsonObject = new JSONObject();

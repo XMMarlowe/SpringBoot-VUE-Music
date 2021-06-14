@@ -7,6 +7,9 @@ import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.ListSong;
 import com.marlowe.music.entity.Song;
 import com.marlowe.music.entity.SongList;
+import com.marlowe.music.service.IListSongService;
+import com.marlowe.music.service.ISongListService;
+import com.marlowe.music.service.ISongService;
 import com.marlowe.music.service.impl.ListSongServiceImpl;
 import com.marlowe.music.service.impl.SongListServiceImpl;
 import com.marlowe.music.service.impl.SongServiceImpl;
@@ -41,13 +44,13 @@ import java.util.Random;
 public class SongListController {
 
     @Autowired
-    private SongListServiceImpl songListService;
+    private ISongListService songListService;
 
     @Autowired
-    private ListSongServiceImpl listSongService;
+    private IListSongService listSongService;
 
     @Autowired
-    private SongServiceImpl songService;
+    private ISongService songService;
 
     @Configuration
     public class MyPicConfig implements WebMvcConfigurer {

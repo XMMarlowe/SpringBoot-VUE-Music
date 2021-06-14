@@ -9,6 +9,8 @@ spring:
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+
+
 #mybatis:
 #  type-aliases-package: com.marlowe.domain
 #  mapper-locations: mapper/*.xml

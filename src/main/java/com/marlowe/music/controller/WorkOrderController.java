@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.Singer;
 import com.marlowe.music.entity.WorkOrder;
+import com.marlowe.music.service.IWorkOrderService;
 import com.marlowe.music.service.impl.WorkOrderServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +32,7 @@ public class WorkOrderController {
 
 
     @Autowired
-    private WorkOrderServiceImpl workOrderService;
+    private IWorkOrderService workOrderService;
 
     /**
      * 添加工单

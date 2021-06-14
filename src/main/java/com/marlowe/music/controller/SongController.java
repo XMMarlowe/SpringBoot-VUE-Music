@@ -7,11 +7,15 @@ import com.github.pagehelper.PageInfo;
 import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.Singer;
 import com.marlowe.music.entity.Song;
+import com.marlowe.music.service.ISingerService;
+import com.marlowe.music.service.ISongService;
 import com.marlowe.music.service.impl.SingerServiceImpl;
 import com.marlowe.music.service.impl.SongServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
@@ -42,10 +46,10 @@ import java.util.List;
 public class SongController {
 
     @Autowired
-    private SongServiceImpl songService;
+    private ISongService songService;
 
     @Autowired
-    private SingerServiceImpl singerService;
+    private ISingerService singerService;
 
 
     @Bean
@@ -75,6 +79,7 @@ public class SongController {
      */
     @ApiOperation(value = "添加歌曲")
     @PostMapping("add")
+    @RequiresRoles(value = {"root", "admin"}, logical = Logical.OR)
     public Result addSong(@RequestBody Song song) {
         boolean addSong = songService.addSong(song);
         if (addSong) {
@@ -172,6 +177,7 @@ public class SongController {
      */
     @ApiOperation(value = "根据id删除歌曲")
     @GetMapping("delete/{id}")
+    @RequiresRoles("root")
     public Result deleteSong(@PathVariable int id) {
         boolean deleteSong = songService.deleteSong(id);
         if (deleteSong) {
@@ -189,6 +195,7 @@ public class SongController {
      */
     @ApiOperation(value = "批量删除歌曲")
     @GetMapping("deletes")
+    @RequiresRoles("root")
     public Result deleteSongs(@RequestBody List<Integer> idList) {
         boolean deleteSongs = songService.deleteSongs(idList);
         if (deleteSongs) {
@@ -205,6 +212,7 @@ public class SongController {
      */
     @ApiOperation(value = "根据主键id更新歌曲信息，只允许修改歌词")
     @PostMapping("update")
+    @RequiresRoles(value = {"root", "admin"}, logical = Logical.OR)
     public Result updateSongMsg(@RequestBody Song song) {
         boolean updateSongMsg = songService.updateSongMsg(song);
         if (updateSongMsg) {
