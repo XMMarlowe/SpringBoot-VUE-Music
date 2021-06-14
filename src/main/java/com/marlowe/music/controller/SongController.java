@@ -194,7 +194,7 @@ public class SongController {
      * @return
      */
     @ApiOperation(value = "批量删除歌曲")
-    @GetMapping("deletes")
+    @PostMapping("deletes")
     @RequiresRoles("root")
     public Result deleteSongs(@RequestBody List<Integer> idList) {
         boolean deleteSongs = songService.deleteSongs(idList);

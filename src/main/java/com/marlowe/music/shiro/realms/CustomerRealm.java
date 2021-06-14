@@ -55,6 +55,7 @@ public class CustomerRealm extends AuthorizingRealm {
             user.getRoles().forEach(role -> {
                 // 添加角色信息
                 simpleAuthorizationInfo.addRole(role.getName());
+                System.out.println(role.getName()+"================================");
 
                 // 添加权限信息
 //                List<Permission> perms = userService.findPermsByRoleId(role.getId());

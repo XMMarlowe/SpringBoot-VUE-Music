@@ -67,12 +67,13 @@ public class UserController {
      */
     @ApiOperation("用户登录")
     @PostMapping("login")
-    public Result login(@RequestParam String username, @RequestParam String password) {
+    public Result<User> login(@RequestParam String username, @RequestParam String password) {
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             return Result.ok("请输入用户名和密码！");
         }
         //用户认证信息
         Subject subject = SecurityUtils.getSubject();
+        User user = userService.findByUserName(username);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {
             //进行验证，这里可以捕获异常，然后返回对应信息
@@ -87,7 +88,7 @@ public class UserController {
             log.error("没有权限！", e);
             return Result.ok("没有权限");
         }
-        return Result.ok("login success");
+        return Result.ok(user);
     }
 
     /**

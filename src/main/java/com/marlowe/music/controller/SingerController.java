@@ -12,6 +12,7 @@ import com.marlowe.music.service.ISingerService;
 import com.marlowe.music.service.impl.SingerServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ import java.util.Random;
 @RestController
 @Api(tags = "歌手管理控制类")
 @RequestMapping("/singer")
+@Slf4j
 public class SingerController {
 
     @Autowired
@@ -73,6 +75,7 @@ public class SingerController {
     @PostMapping("add")
     @RequiresRoles(value = {"root", "admin"}, logical = Logical.OR)
     public Result addSinger(@RequestBody Singer singer) {
+        log.info("singer:" + singer);
         boolean addSinger = singerService.addSinger(singer);
         if (addSinger) {
             return Result.ok("添加成功");

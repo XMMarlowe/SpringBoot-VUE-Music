@@ -51,7 +51,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
     @Override
     public Singer findBySingerId(int singerId) {
         QueryWrapper<Singer> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("singer_id", singerId);
+        queryWrapper.eq("id", singerId);
         Singer singer = singerMapper.selectOne(queryWrapper);
         return singer;
     }

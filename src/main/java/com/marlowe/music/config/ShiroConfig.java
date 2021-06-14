@@ -61,7 +61,7 @@ public class ShiroConfig {
 
         //其余接口一律拦截
         //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
-//        map.put("/**", "authc");
+        map.put("/**", "anon");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         System.out.println("shiro拦截器工厂类注入成功");
