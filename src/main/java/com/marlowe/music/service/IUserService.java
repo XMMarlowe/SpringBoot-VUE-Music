@@ -104,4 +104,19 @@ public interface IUserService extends IService<User> {
      */
     User findUserById(int id);
 
+    /**
+     * 查询用户总数
+     *
+     * @return
+     */
+    int userCount();
+
+    /**
+     * 根据性别查询用户的个数
+     *
+     * @param sex
+     * @return
+     */
+    int userCountBySex(int sex);
+
 }

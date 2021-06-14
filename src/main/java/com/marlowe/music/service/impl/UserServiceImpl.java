@@ -152,6 +152,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     /**
+     * 查询用户总数
+     *
+     * @return
+     */
+    @Override
+    public int userCount() {
+        return userMapper.selectCount(null);
+    }
+
+    /**
+     * 根据性别查询用户的个数
+     *
+     * @param sex
+     * @return
+     */
+    @Override
+    public int userCountBySex(int sex) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("sex", sex);
+        int selectCount = userMapper.selectCount(queryWrapper);
+        return selectCount;
+    }
+
+    /**
      * @param username
      * @return
      */

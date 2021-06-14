@@ -57,6 +57,12 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
     }
 
 
+    /**
+     * 新增歌手
+     *
+     * @param singer
+     * @return
+     */
     @Override
     public boolean addSinger(Singer singer) {
         return singerMapper.insert(singer) > 0;

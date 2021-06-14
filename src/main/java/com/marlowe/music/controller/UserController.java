@@ -1,6 +1,7 @@
 package com.marlowe.music.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.User;
@@ -211,4 +212,34 @@ public class UserController {
     }
 
 
+    /**
+     * 获得用户总数
+     *
+     * @return
+     */
+    @ApiOperation(value = "获得用户总数")
+    @GetMapping("count")
+    public Result userCount() {
+        int userCount = userService.userCount();
+        return Result.ok(userCount);
+    }
+
+
+    /**
+     * 获得男性和女性用户的个数
+     *
+     * @return
+     */
+    @ApiOperation("获得男性和女性用户的个数")
+    @GetMapping("detail/sex")
+    public Result userBySex() {
+        JSONObject jsonObject = new JSONObject();
+        // 查询男性的个数
+        int countBySex1 = userService.userCountBySex(1);
+        jsonObject.put("男性", countBySex1);
+        // 查询女性的个数
+        int countBySex2 = userService.userCountBySex(0);
+        jsonObject.put("女性", countBySex2);
+        return Result.ok(jsonObject);
+    }
 }
