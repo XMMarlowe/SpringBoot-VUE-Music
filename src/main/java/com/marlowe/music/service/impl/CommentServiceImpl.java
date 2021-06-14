@@ -88,8 +88,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public PageInfo<Comment> allComments(int pageNo, int pageSize) {
         // 设置分页查询参数
         PageHelper.startPage(pageNo, pageSize);
+        QueryWrapper<Comment> queryWrapper = new QueryWrapper();
+        queryWrapper.orderByDesc("create_time");
 
-        List<Comment> comments = commentMapper.selectList(null);
+        List<Comment> comments = commentMapper.selectList(queryWrapper);
 
         PageInfo<Comment> pageInfo = new PageInfo(comments);
 

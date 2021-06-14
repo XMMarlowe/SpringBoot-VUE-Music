@@ -1,8 +1,11 @@
 package com.marlowe.music.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.marlowe.music.entity.Permission;
 import com.marlowe.music.entity.Role;
+import com.marlowe.music.entity.Song;
 import com.marlowe.music.entity.User;
 import com.marlowe.music.mapper.UserMapper;
 import com.marlowe.music.service.IUserService;
@@ -85,6 +88,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         Md5Hash md5Hash = new Md5Hash(user.getPassword(), salt, 1024);
         user.setPassword(md5Hash.toHex());
         return userMapper.insert(user) > 0;
+    }
+
+    /**
+     * 分页查询所有用户
+     *
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageInfo<User> allUsers(int pageNo, int pageSize) {
+        // 设置分页查询参数
+        PageHelper.startPage(pageNo, pageSize);
+
+        List<User> users = userMapper.findAllUsers();
+        PageInfo<User> pageInfo = new PageInfo(users);
+        return pageInfo;
     }
 
     /**

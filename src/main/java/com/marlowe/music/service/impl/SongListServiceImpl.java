@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.marlowe.music.entity.ListSong;
+import com.marlowe.music.entity.Singer;
 import com.marlowe.music.entity.SongList;
 import com.marlowe.music.mapper.SongListMapper;
 import com.marlowe.music.service.ISongListService;
@@ -110,8 +111,9 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     public PageInfo<SongList> allSongList(int pageNo, int pageSize) {
         // 设置分页查询参数
         PageHelper.startPage(pageNo, pageSize);
-
-        List<SongList> songLists = songListMapper.selectList(null);
+        QueryWrapper<SongList> queryWrapper = new QueryWrapper();
+        queryWrapper.orderByDesc("create_time");
+        List<SongList> songLists = songListMapper.selectList(queryWrapper);
         PageInfo<SongList> pageInfo = new PageInfo(songLists);
         return pageInfo;
     }

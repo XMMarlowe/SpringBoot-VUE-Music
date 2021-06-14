@@ -40,4 +40,7 @@
     <select id="findUserById" resultType="com.marlowe.music.entity.User">
         select * from user where id	= #{id}
     </select>
+    <select id="findAllUsers" resultType="com.marlowe.music.entity.User">
+        select * from user order by create_time desc
+    </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.marlowe.music.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.User;
 import com.marlowe.music.service.IUserService;
@@ -192,6 +193,21 @@ public class UserController {
     public Result<User> findUserById(@PathVariable int id) {
         User user = userService.findUserById(id);
         return Result.ok(user);
+    }
+
+    /**
+     * 分页查找所有用户
+     *
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @ApiOperation("分页查找所有用户")
+    @GetMapping("allUsers/{pageNo}/{pageSize}")
+    public Result<List<User>> allUsers(@PathVariable int pageNo, @PathVariable int pageSize) {
+        PageInfo<User> pageInfo = userService.allUsers(pageNo, pageSize);
+        List<User> users = pageInfo.getList();
+        return Result.ok(users);
     }
 
 

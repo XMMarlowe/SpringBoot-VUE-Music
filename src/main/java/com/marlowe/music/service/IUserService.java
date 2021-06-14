@@ -1,7 +1,9 @@
 package com.marlowe.music.service;
 
+import com.github.pagehelper.PageInfo;
 import com.marlowe.music.entity.Permission;
 import com.marlowe.music.entity.Role;
+import com.marlowe.music.entity.Song;
 import com.marlowe.music.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -57,6 +59,16 @@ public interface IUserService extends IService<User> {
      * @return
      */
     boolean addUser(User user);
+
+
+    /**
+     * 分页查询所有用户
+     *
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    PageInfo<User> allUsers(int pageNo, int pageSize);
 
 
     /**

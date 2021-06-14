@@ -34,7 +34,10 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
     public PageInfo<Singer> allSinger(int pageNo, int pageSize) {
         // 设置分页查询参数
         PageHelper.startPage(pageNo, pageSize);
-        List<Singer> singers = singerMapper.selectList(null);
+
+        QueryWrapper<Singer> queryWrapper = new QueryWrapper();
+        queryWrapper.orderByDesc("create_time");
+        List<Singer> singers = singerMapper.selectList(queryWrapper);
         PageInfo<Singer> pageInfo = new PageInfo(singers);
         return pageInfo;
     }

@@ -45,4 +45,6 @@ public interface UserMapper extends BaseMapper<User> {
      */
     User findUserById(int id);
 
+    List<User> findAllUsers();
+
 }

@@ -3,6 +3,7 @@ package com.marlowe.music.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.marlowe.music.entity.Singer;
 import com.marlowe.music.entity.Song;
 import com.marlowe.music.entity.WorkOrder;
 import com.marlowe.music.mapper.SongMapper;
@@ -103,8 +104,9 @@ public class WorkOrderServiceImpl extends ServiceImpl<WorkOrderMapper, WorkOrder
     public PageInfo<WorkOrder> allWorkOrder(int pageNo, int pageSize) {
         // 设置分页查询参数
         PageHelper.startPage(pageNo, pageSize);
-
-        List<WorkOrder> workOrders = workOrderMapper.selectList(null);
+        QueryWrapper<WorkOrder> queryWrapper = new QueryWrapper();
+        queryWrapper.orderByDesc("create_time");
+        List<WorkOrder> workOrders = workOrderMapper.selectList(queryWrapper);
         PageInfo<WorkOrder> pageInfo = new PageInfo(workOrders);
         return pageInfo;
     }

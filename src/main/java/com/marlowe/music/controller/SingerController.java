@@ -63,6 +63,7 @@ public class SingerController {
         return Result.ok(singer);
     }
 
+
     /**
      * 添加歌手
      *
