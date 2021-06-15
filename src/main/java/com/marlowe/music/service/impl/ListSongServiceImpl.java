@@ -58,7 +58,7 @@ public class ListSongServiceImpl extends ServiceImpl<ListSongMapper, ListSong> i
         Integer songId = listSong.getSongId();
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("song_id", songId);
-        Song song = songMapper.selectOne(queryWrapper);
+        Song song = songMapper.selectById(songId);
         String pic = song.getPic();
 
         songList.setPic(pic);

@@ -1,12 +1,14 @@
 package com.marlowe.music.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.ListSong;
 import com.marlowe.music.entity.Song;
 import com.marlowe.music.entity.SongList;
 import com.marlowe.music.service.IListSongService;
+import com.marlowe.music.service.ISongListService;
 import com.marlowe.music.service.ISongService;
 import com.marlowe.music.service.impl.ListSongServiceImpl;
 import com.marlowe.music.service.impl.SongServiceImpl;
@@ -37,6 +39,9 @@ public class ListSongController {
 
     @Autowired
     private ISongService songService;
+
+    @Autowired
+    private ISongListService songListService;
 
     /**
      * 添加歌曲到歌单中，并更新当前歌曲pic为歌单封面
@@ -74,6 +79,7 @@ public class ListSongController {
 
     /**
      * 删除指定歌单id里面的指定歌曲id,并更新歌单封面
+     *
      * @param songId
      * @param songListId
      * @return
@@ -81,14 +87,13 @@ public class ListSongController {
     @ApiOperation("删除指定歌单id里面的指定歌曲id,并更新歌单封面")
     @PostMapping("delete/{songId}/{songListId}")
     public Result deleteListSongBySongIdAndSongListId(@PathVariable int songId, @PathVariable int songListId) {
-        boolean deleteListSong = listSongService.deleteListSongBySongIdAndSongListId(songId,songListId);
+        boolean deleteListSong = listSongService.deleteListSongBySongIdAndSongListId(songId, songListId);
         if (deleteListSong) {
             return Result.ok("删除成功");
         } else {
             return Result.ok("删除失败");
         }
     }
-
 
 
     /**
@@ -102,6 +107,8 @@ public class ListSongController {
     @ApiOperation("分页查询歌单表里指定歌单ID的所有歌曲")
     @GetMapping("detail/{songListId}/{pageNo}/{pageSize}")
     public Result<List<Song>> findSongsBySongListId(@PathVariable int songListId, @PathVariable int pageNo, @PathVariable int pageSize) {
+        JSONObject jsonObject = new JSONObject();
+
         PageInfo<ListSong> pageInfo = listSongService.findSongsBySongListId(songListId, pageNo, pageSize);
         List<ListSong> songIds = pageInfo.getList();
 
@@ -111,9 +118,15 @@ public class ListSongController {
             Song song = songService.findSongById(songId.getSongId());
             songs.add(song);
         }
-        return Result.ok(songs);
-    }
 
+
+        // 通过歌单id查询歌单信息并返回
+        SongList songListInfo = songListService.findById(songListId);
+
+        jsonObject.put("songs", songs);
+        jsonObject.put("songListInfo", songListInfo);
+        return Result.ok(jsonObject);
+    }
 
 
 }
