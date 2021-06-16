@@ -73,7 +73,7 @@ public class SingerController {
      */
     @ApiOperation(value = "添加歌手")
     @PostMapping("add")
-    @RequiresRoles(value = {"root", "admin"}, logical = Logical.OR)
+    @RequiresRoles("root")
     public Result addSinger(@RequestBody Singer singer) {
         log.info("singer:" + singer);
         boolean addSinger = singerService.addSinger(singer);

@@ -67,17 +67,27 @@ public class UserController {
      */
     @ApiOperation("用户登录")
     @PostMapping("login")
-    public Result<User> login(@RequestParam String username, @RequestParam String password) {
+    public Result<JSONObject> login(@RequestParam String username, @RequestParam String password) {
+
+        JSONObject jsonObject = new JSONObject();
+
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             return Result.ok("请输入用户名和密码！");
         }
         //用户认证信息
         Subject subject = SecurityUtils.getSubject();
-        User user = userService.findByUserName(username);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {
             //进行验证，这里可以捕获异常，然后返回对应信息
             subject.login(token);
+            User user = userService.findByUserName(username);
+
+            subject.getSession().setAttribute("User", user);
+
+            jsonObject.put("user", user);
+            jsonObject.put("token", subject.getSession().getId());
+
+            log.info("jsonObject" + jsonObject);
         } catch (UnknownAccountException e) {
             log.error("用户名不存在！", e);
             return Result.ok("用户名不存在！");
@@ -88,7 +98,8 @@ public class UserController {
             log.error("没有权限！", e);
             return Result.ok("没有权限");
         }
-        return Result.ok(user);
+        System.out.println(token + "token----------------------------");
+        return Result.ok(jsonObject);
     }
 
     /**

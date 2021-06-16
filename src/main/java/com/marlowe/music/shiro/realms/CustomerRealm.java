@@ -52,6 +52,7 @@ public class CustomerRealm extends AuthorizingRealm {
         if (!CollectionUtil.isEmpty(user.getRoles())) {
             //权限信息对象info,用来存放查出的用户的所有的角色（Role）及权限（permission）
             SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+            System.out.println(user.getRoles()+"-------------------------");
             user.getRoles().forEach(role -> {
                 // 添加角色信息
                 simpleAuthorizationInfo.addRole(role.getName());

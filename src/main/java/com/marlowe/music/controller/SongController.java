@@ -79,7 +79,7 @@ public class SongController {
      */
     @ApiOperation(value = "添加歌曲")
     @PostMapping("add")
-    @RequiresRoles(value = {"root", "admin"}, logical = Logical.OR)
+//    @RequiresRoles(value = {"root", "admin"}, logical = Logical.OR)
     public Result addSong(@RequestBody Song song) {
         boolean addSong = songService.addSong(song);
         if (addSong) {
@@ -134,9 +134,19 @@ public class SongController {
     @ApiOperation(value = "查询指定歌手ID的所有歌曲")
     @GetMapping("/singer-id/detail/{singerId}/{pageNo}/{pageSize}")
     public Result<Song> findSongsBySingerId(@PathVariable("singerId") int singerId, @PathVariable int pageNo, @PathVariable int pageSize) {
+        JSONObject jsonObject = new JSONObject();
+
+        // 查询歌手的所有歌曲
         PageInfo<Song> pageInfo = songService.findSongBySingerId(singerId, pageNo, pageSize);
         List<Song> songs = pageInfo.getList();
-        return Result.ok(songs);
+
+        // 根据歌手id查询歌手信息
+        Singer singer = singerService.findBySingerId(singerId);
+
+        jsonObject.put("songs", songs);
+        jsonObject.put("singer", singer);
+
+        return Result.ok(jsonObject);
     }
 
 
@@ -177,7 +187,7 @@ public class SongController {
      */
     @ApiOperation(value = "根据id删除歌曲")
     @GetMapping("delete/{id}")
-    @RequiresRoles("root")
+//    @RequiresRoles("root")
     public Result deleteSong(@PathVariable int id) {
         boolean deleteSong = songService.deleteSong(id);
         if (deleteSong) {
@@ -195,7 +205,7 @@ public class SongController {
      */
     @ApiOperation(value = "批量删除歌曲")
     @PostMapping("deletes")
-    @RequiresRoles("root")
+//    @RequiresRoles("root")
     public Result deleteSongs(@RequestBody List<Integer> idList) {
         boolean deleteSongs = songService.deleteSongs(idList);
         if (deleteSongs) {
@@ -212,7 +222,7 @@ public class SongController {
      */
     @ApiOperation(value = "根据主键id更新歌曲信息，只允许修改歌词")
     @PostMapping("update")
-    @RequiresRoles(value = {"root", "admin"}, logical = Logical.OR)
+//    @RequiresRoles(value = {"root", "admin"}, logical = Logical.OR)
     public Result updateSongMsg(@RequestBody Song song) {
         boolean updateSongMsg = songService.updateSongMsg(song);
         if (updateSongMsg) {
