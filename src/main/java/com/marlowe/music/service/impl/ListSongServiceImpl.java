@@ -54,21 +54,19 @@ public class ListSongServiceImpl extends ServiceImpl<ListSongMapper, ListSong> i
 
 
         // 通过songId查询歌曲信息
-
         Integer songId = listSong.getSongId();
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("song_id", songId);
         Song song = songMapper.selectById(songId);
-        String pic = song.getPic();
-
-        songList.setPic(pic);
-
-        // 通过songList的id更新他的pic
-        QueryWrapper<SongList> queryWrapper1 = new QueryWrapper<>();
-        queryWrapper1.eq("id", songListId);
-        int update = songListMapper.update(songList, queryWrapper1);
-
-        return (insert > 0 && update > 0);
+        if (song != null) {
+            String pic = song.getPic();
+            songList.setPic(pic);
+            // 通过songList的id更新他的pic
+            QueryWrapper<SongList> queryWrapper1 = new QueryWrapper<>();
+            queryWrapper1.eq("id", songListId);
+            int update = songListMapper.update(songList, queryWrapper1);
+        }
+        return (insert > 0);
 
     }
 
