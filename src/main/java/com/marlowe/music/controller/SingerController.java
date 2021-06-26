@@ -203,7 +203,7 @@ public class SingerController {
     public Result<List<Singer>> getRandomSinger(@PathVariable int num) {
         List<Singer> res = new ArrayList();
 
-        PageInfo<Singer> pageInfo = singerService.allSinger(1, 100000);
+        PageInfo<Singer> pageInfo = singerService.allSinger(1, 50);
         List<Singer> list = pageInfo.getList();
 
         // 获得歌单列表大小，生成索引随机数

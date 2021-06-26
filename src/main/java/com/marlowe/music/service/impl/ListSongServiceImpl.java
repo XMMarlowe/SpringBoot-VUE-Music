@@ -3,6 +3,7 @@ package com.marlowe.music.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.marlowe.music.commons.result.Result;
 import com.marlowe.music.entity.ListSong;
 import com.marlowe.music.entity.Song;
 import com.marlowe.music.entity.SongList;
@@ -45,6 +46,16 @@ public class ListSongServiceImpl extends ServiceImpl<ListSongMapper, ListSong> i
      */
     @Override
     public boolean addListSong(ListSong listSong) {
+        // 查询当前歌曲是否存在该歌单中
+
+        QueryWrapper queryWrapper2 = new QueryWrapper();
+        queryWrapper2.eq("song_id", listSong.getSongId());
+        queryWrapper2.eq("song_list_id", listSong.getSongListId());
+
+        ListSong listSong1 = listSongMapper.selectOne(queryWrapper2);
+        if (listSong1 != null) {
+            return false;
+        }
 
         int insert = listSongMapper.insert(listSong);
 
@@ -56,8 +67,9 @@ public class ListSongServiceImpl extends ServiceImpl<ListSongMapper, ListSong> i
         // 通过songId查询歌曲信息
         Integer songId = listSong.getSongId();
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("song_id", songId);
+        queryWrapper.eq("id", songId);
         Song song = songMapper.selectById(songId);
+
         if (song != null) {
             String pic = song.getPic();
             songList.setPic(pic);

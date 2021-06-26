@@ -56,7 +56,7 @@ public class ListSongController {
         if (addListSong) {
             return Result.ok("添加成功");
         } else {
-            return Result.ok("添加失败");
+            return Result.ok("该歌曲已在歌单中");
         }
     }
 
