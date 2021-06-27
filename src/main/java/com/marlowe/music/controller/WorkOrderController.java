@@ -77,7 +77,7 @@ public class WorkOrderController {
      * @return
      */
     @ApiOperation(value = "根据id删除工单")
-    @PostMapping("delete/{id}")
+    @GetMapping("delete/{id}")
     public Result deleteWorkOrderById(@PathVariable int id) {
         boolean deleteWorkOrderById = workOrderService.deleteWorkOrderById(id);
         if (deleteWorkOrderById) {
@@ -126,7 +126,7 @@ public class WorkOrderController {
      * @return
      */
     @ApiOperation(value = "根据id查询工单")
-    @PostMapping("detail/{id}")
+    @GetMapping("detail/{id}")
     public Result findWorkOrderById(@PathVariable int id) {
         WorkOrder workOrder = workOrderService.findWorkOrderById(id);
         return Result.ok(workOrder);
