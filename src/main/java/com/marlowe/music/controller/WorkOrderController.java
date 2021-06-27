@@ -112,7 +112,7 @@ public class WorkOrderController {
      * @return
      */
     @ApiOperation(value = "分页查询所有工单")
-    @PostMapping("allWorkOrder/{pageNo}/{pageSize}")
+    @GetMapping("allWorkOrder/{pageNo}/{pageSize}")
     public Result<List<WorkOrder>> allWorkOrder(@PathVariable int pageNo, @PathVariable int pageSize) {
         PageInfo<WorkOrder> pageInfo = workOrderService.allWorkOrder(pageNo, pageSize);
         List<WorkOrder> workOrders = pageInfo.getList();
