@@ -77,10 +77,9 @@ public class User implements Serializable {
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime updateTime;
 
+    @TableField(exist = false)
     @ApiModelProperty(value = "定义角色集合")
     private List<Role> roles;
-
-
 
 
 }
